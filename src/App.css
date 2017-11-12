@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+@import url('https://fonts.googleapis.com/css?family=Poiret+One');
+@import url('https://fonts.googleapis.com/css?family=Nixie+One');
+
+html, body {
+  font-family: 'Quicksand', sans-serif;
+}
+.allocationTableContainer .button-group .btn {
+  margin-left: 2px;
+}
+.allocationTableContainer .button-group .btn:not([disabled]):not(.disabled).active {
+  box-shadow: none !important;
+}
+.allocationTableContainer .targetAllocationTable {
+  width: 80%;
+}
+.allocationTableContainer .rebalanceDetailForm .formContainer {
+  padding: 20px;
+}
+
+/* common */
+.fixed-table {
+  table-layout: fixed;
+  word-wrap: break-word;
+}
+.color-slate-blue {
+  color: #7B68EE !important;
+}
+.bg-slate-blue {
+  background-color: #7B68EE !important;
+}
+.btn-slate-blue {
+  background-color: #7B68EE;
+}
+.no-padding {
+  padding: 0 !important;
+}
+.no-border-tr td {
+  border: 0 !important;
+}
+.abs-top-right {
+  position: relative;
+}
+.abs-top-right > .abs-top-child{
+  position: absolute;
+  top: 3px;
+  right: 3px;
+}
+.width-100 {
+  width: 100%;
+}
