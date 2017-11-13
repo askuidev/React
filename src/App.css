@@ -7,6 +7,12 @@
 html, body {
   font-family: 'Quicksand', sans-serif;
 }
+.allocationTableContainer .card {
+  border-radius: 0;
+}
+.allocationTableContainer .btn {
+  border-radius: 0;
+}
 .allocationTableContainer .button-group .btn {
   margin-left: 2px;
 }
@@ -33,6 +39,7 @@ html, body {
 }
 .btn-slate-blue {
   background-color: #7B68EE;
+  border-color: #7B68EE;
 }
 .no-padding {
   padding: 0 !important;
