@@ -21,27 +21,27 @@ class AssetAllocationTable extends React.Component {
       <div className="allocationTableContainer">
         <div id="assetAllocationPanel" className="card">
           <div className="card-header">
-            <a className="navbar-brand color-slate-blue"
+            <span className="navbar-brand color-light-blue"
               data-toggle="collapse"
               data-parent="#assetAllocationPanel"
               href="#assetAllocationPanelBody"
               onClick={()=>this.setState({open:!this.state.open})}>
               {!open ?
                   <FaPlusSquare /> : <FaMinusSquare />} Asset Allocation Table
-            </a>
-            <ButtonGroup mainClass="float-right" buttons={["Summary", "Expanded", "Deep"]} />
+            </span>
+            <ButtonGroup mainClass="float-right" buttons={["Summary", "Expanded", "Deep"]} btnClass="btn-light-white" />
           </div>
           <div id="assetAllocationPanelBody" className={"card-body "+assetAlcClass}>
             <table className="table table-bordered text-light assetAllocationTable">
               <tbody>
-                <tr className="bg-secondary text-center">
+                <tr className="bg-light-grey text-center">
                   <td rowSpan="2" width="20%">Asset Class</td>
                   <td colSpan="2">Current Allocation</td>
                   <td colSpan="2">Proposed Allocation</td>
                   <td colSpan="2">Drift( Proposed and PPA )</td>
                   <td colSpan="2">PPA asset location</td>
                 </tr>
-                <tr className="bg-secondary text-center">
+                <tr className="bg-light-grey text-center">
                   <td>% Percentage</td>
                   <td>$ Dollar</td>
                   <td>% Percentage</td>
@@ -51,7 +51,7 @@ class AssetAllocationTable extends React.Component {
                   <td>% Percentage</td>
                   <td>$ Dollar</td>
                 </tr>
-                <tr className="bg-primary">
+                <tr className="bg-light-cyan">
                   <td>cash and cash investments</td>
                   <td>21.12 %</td>
                   <td>21,716 $</td>
@@ -62,7 +62,7 @@ class AssetAllocationTable extends React.Component {
                   <td>21.12 %</td>
                   <td>21,716 $</td>
                 </tr>
-                <tr className="bg-danger">
+                <tr className="bg-dark-voilet">
                   <td>fixed income</td>
                   <td>21.12 %</td>
                   <td>21,716 $</td>
@@ -73,7 +73,7 @@ class AssetAllocationTable extends React.Component {
                   <td>21.12 %</td>
                   <td>21,716 $</td>
                 </tr>
-                <tr className="bg-warning">
+                <tr className="bg-dark-blue">
                   <td>equity</td>
                   <td>21.12 %</td>
                   <td>21,716 $</td>
@@ -84,7 +84,7 @@ class AssetAllocationTable extends React.Component {
                   <td>21.12 %</td>
                   <td>21,716 $</td>
                 </tr>
-                <tr className="bg-success">
+                <tr className="bg-dark-orange">
                   <td>alternatives</td>
                   <td>21.12 %</td>
                   <td>21,716 $</td>
@@ -95,7 +95,7 @@ class AssetAllocationTable extends React.Component {
                   <td>21.12 %</td>
                   <td>21,716 $</td>
                 </tr>
-                <tr className="bg-primary">
+                <tr className="bg-dark-red">
                   <td>derivatives</td>
                   <td>21.12 %</td>
                   <td>21,716 $</td>
@@ -106,7 +106,7 @@ class AssetAllocationTable extends React.Component {
                   <td>21.12 %</td>
                   <td>21,716 $</td>
                 </tr>
-                <tr className="bg-dark">
+                <tr className="bg-dark-grey">
                   <td>other</td>
                   <td>21.12 %</td>
                   <td>21,716 $</td>
@@ -117,7 +117,7 @@ class AssetAllocationTable extends React.Component {
                   <td>21.12 %</td>
                   <td>21,716 $</td>
                 </tr>
-                <tr className="bg-secondary">
+                <tr className="bg-white text-dark">
                   <td>total</td>
                   <td>21.12 %</td>
                   <td>21,716 $</td>
@@ -128,7 +128,7 @@ class AssetAllocationTable extends React.Component {
                   <td></td>
                   <td></td>
                 </tr>
-                <tr className="bg-light text-dark">
+                <tr className="bg-white text-dark">
                   <td>Cash addition/withdrawl</td>
                   <td></td>
                   <td></td>
@@ -139,7 +139,7 @@ class AssetAllocationTable extends React.Component {
                   <td></td>
                   <td></td>
                 </tr>
-                <tr className="bg-secondary no-border-tr">
+                <tr className="bg-grey no-border-tr">
                   <td>Net balance</td>
                   <td></td>
                   <td></td>

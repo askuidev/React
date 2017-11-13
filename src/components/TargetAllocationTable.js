@@ -29,41 +29,41 @@ class AssetAllocationTable extends React.Component {
       <div className="allocationTableContainer" id="allocationTableContainer" style={{marginTop: "2px"}}>
         <div id="targetAllocationPanel" className="card">
           <div className="card-header">
-            <a className="navbar-brand color-slate-blue"
+            <span className="navbar-brand color-light-blue"
               data-toggle="collapse"
               data-parent="#targetAllocationPanel"
               href="#targetAllocationPanelBody"
               onClick={()=>this.setState({open:!this.state.open})}>
               {!open ?
                   <FaPlusSquare /> : <FaMinusSquare />} Target Allocation Table
-            </a>
+            </span>
             <div className="collapse navbar-collapse">
               <ul className="navbar-nav">
               </ul>
             </div>
-            <ButtonGroup mainClass="float-right" buttons={["Summary", "Expanded", "Deep"]} />
+            <ButtonGroup mainClass="float-right" buttons={["Summary", "Expanded", "Deep"]} btnClass="btn-light-white" />
           </div>
           <div id="targetAllocationPanelBody" className={"card-body "+assetAlcClass}>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
               <div className="collapse navbar-collapse">
-                <ButtonGroup btnClass="btn-slate-blue" buttons={["Add Security"]} />
+                <ButtonGroup btnClass="btn-slate-blue" buttons={["Add Security"]}  />
               </div>
               <ButtonGroup btnClass="btn-secondary" buttons={["Clear"]} />
             </nav>
-            <table className="table table-striped table-bordered table-secondary text-dark targetAllocationTable">
+            <table className="table fixed-table table-bordered table-striped text-dark targetAllocationTable">
               <tbody>
-                <tr className="bg-dark text-light">
-                  <td style={this.getStyle("width", 70)}>Symbol</td>
-                  <td style={this.getStyle("width", 150)}>Description</td>
+                <tr className="bg-light-grey">
+                  <td style={this.getStyle("width", 80)}>Symbol</td>
+                  <td style={this.getStyle("width", 120)}>Description</td>
                   <td style={this.getStyle("width", 80)}>Sell/Buy Flag</td>
                   <td style={this.getStyle("width", 80)}>Auto RBAL Eligibility</td>
                   <td style={this.getStyle("width", 80)}>Value</td>
                   <td style={this.getStyle("width", 80)}>Current %</td>
-                  <td style={this.getStyle("width", 80)}>Target %</td>
+                  <td style={this.getStyle("width", 120)}>Target %</td>
                   <td style={this.getStyle("width", 80)}>Target $</td>
-                  <td style={this.getStyle("width", 50)}>Drift %</td>
+                  <td style={this.getStyle("width", 80)}>Drift %</td>
                   <td style={this.getStyle("width", 80)}>Drift $<br/>Buy/Sell</td>
-                  <td style={this.getStyle("width", 50)}>Cash</td>
+                  <td style={this.getStyle("width", 80)}>Cash</td>
                   <td style={this.getStyle("width", 80)}>Fixed Income</td>
                   <td style={this.getStyle("width", 50)}>Equity</td>
                   <td style={this.getStyle("width", 80)}>Alternatives</td>

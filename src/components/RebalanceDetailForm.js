@@ -21,14 +21,14 @@ class RebalanceDetailForm extends React.Component {
       <div className="allocationTableContainer" id="allocationTableContainer" style={{marginTop: "2px"}}>
         <div id="rebalanceDetailPanel" className="card">
           <div className="card-header">
-            <a className="navbar-brand color-slate-blue"
+            <span className="navbar-brand color-light-blue"
               data-toggle="collapse"
               data-parent="#rebalanceDetailPanel"
               href="#rebalanceDetailPanelBody"
               onClick={()=>this.setState({open:!this.state.open})}>
               {!open ?
                   <FaPlusSquare /> : <FaMinusSquare />} Rebalance Detail
-            </a>
+            </span>
           </div>
           <div id="rebalanceDetailPanelBody" className={"card-body "+assetAlcClass}>
             <div className="formContainer">
@@ -84,7 +84,7 @@ class RebalanceDetailForm extends React.Component {
           </div>
           <div className={"card-footer "+assetAlcClass}>
             <ButtonGroup mainClass="float-left" btnClass="btn-secondary" buttons={["Cancel", "Save As Draft", "Ramove Target"]} />
-            <ButtonGroup mainClass="float-left" btnClass="btn-slate-blue" buttons={["Next"]} />
+            <ButtonGroup mainClass="float-left" btnClass="btn-light-blue" buttons={["Next"]} />
           </div>
         </div>
       </div>
