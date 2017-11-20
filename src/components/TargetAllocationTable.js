@@ -5,16 +5,182 @@ import FaMinusSquare from 'react-icons/lib/fa/minus-square'
 import FaFlag from 'react-icons/lib/fa/flag'
 import FaInfoCircle from 'react-icons/lib/fa/info-circle'
 import FaCheckCircle from 'react-icons/lib/fa/check-circle'
-
-
-// Import React bootstrap
 import ButtonGroup from './common/ButtonGroup';
+import CurrencyFormatter from 'currency-formatter';
+import {Icon} from 'react-fa';
+
+const allocationData = [
+  {
+    color: "",
+    symbol: "FTFBX",
+    description: "Fidelity Total Bond Fund",
+    value: "21716.67",
+    currentPer: "21.12",
+    targetPer: "10.35",
+    targetPrice: "10282.78",
+    driftPer: "11.12",
+    buySellPrice: "11433.89"
+  },
+  {
+    color: "",
+    symbol: "FTFBX",
+    description: "Fidelity Total Bond Fund",
+    value: "21716.67",
+    currentPer: "21.12",
+    targetPer: "10.35",
+    targetPrice: "10282.78",
+    driftPer: "11.12",
+    buySellPrice: "11433.89"
+  },
+  {
+    color: "red",
+    symbol: "FTFBX",
+    description: "Fidelity Total Bond Fund",
+    value: "21716.67",
+    currentPer: "21.12",
+    targetPer: "10.35",
+    targetPrice: "10282.78",
+    driftPer: "11.12",
+    buySellPrice: "11433.89"
+  }
+];
+
+class TableRow extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      targetPercentage: 0
+    };
+  }
+  componentWillMount() {
+    this.setState({
+      targetPercentage: this.props.data.targetPer
+    });
+  }
+  getStyle(prop, value) {
+    const style = {};
+    style[prop] = value;
+    return style;
+  }
+  getColorBox(color) {
+    return <span className="square20" style={this.getStyle("backgroundColor",color)}></span>
+  }
+  getRenderPrice(price) {
+    return CurrencyFormatter.format(price, { code: 'USD' });
+  }
+  getTargetInput(id) {
+    return <input
+            type="text"
+            className="form-control target-price-input"
+            onChange={this.onTargetPriceChange.bind(this, id)}
+            value={this.state.targetPercentage} />
+  }
+  onTargetPriceChange = (id, e) => {
+    this.setState({
+      targetPercentage: e.target.value
+    });
+    this.props.onDataChange(e.target.value, id);
+  }
+  render() {
+    const { data, id } = this.props;
+    return <tr>
+      <td style={this.getStyle("width", "20px")}>{data.color?this.getColorBox(data.color):""}</td>
+      <td>{data.symbol}</td>
+      <td>{data.description}</td>
+      <td>{this.getRenderPrice(data.value)}</td>
+      <td>{data.currentPer}</td>
+      <td>{this.getTargetInput(id)}</td>
+      <td>{this.getRenderPrice(data.targetPrice)}</td>
+      <td>{data.driftPer}</td>
+      <td>{this.getRenderPrice(data.buySellPrice)}</td>
+    </tr>
+  }
+}
+
+class TableFooter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchText: ""
+    }
+  }
+  componentWillMount() {
+  }
+  getStyle(prop, value) {
+    const style = {};
+    style[prop] = value;
+    return style;
+  }
+  getRenderPrice(price) {
+    return CurrencyFormatter.format(price, { code: 'USD' });
+  }
+  getSearchInput() {
+    return <div className="input-group allocationSearchInput">
+            <span className="input-group-addon input-lg"><Icon name="search" /></span>
+            <input type="text"
+              className="form-control input-lg"
+              onChange={this.onSearchChange}
+              value={this.state.searchText}
+              placeholder="Add new" />
+          </div>
+  }
+  calculateTotal(field) {
+    const { data } = this.props;
+    let total = data.reduceRight((prevValue, obj) => {
+      return prevValue + +obj[field];
+    },0);
+    return total.toFixed(2);
+  }
+  onSearchChange = (e) => {
+    this.setState({
+      searchText: e.target.value
+    });
+  }
+  render() {
+    const { data } = this.props;
+    return <tfoot>
+      <tr>
+        <td colSpan="3">
+          {this.getSearchInput(data.targetPer)}
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>Cash Addition/ Withdrawl</td>
+        <td>{this.getRenderPrice(7780.00)}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>Total:</td>
+        <td>{this.getRenderPrice(this.calculateTotal("value"))}</td>
+        <td>{this.calculateTotal("currentPer")}</td>
+        <td>{this.calculateTotal("targetPer")}</td>
+        <td>{this.getRenderPrice(this.calculateTotal("targetPrice"))}</td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tfoot>
+  }
+}
 
 class AssetAllocationTable extends React.Component {
   constructor() {
     super();
     this.state = {
-      open: false
+      data: allocationData
     };
   }
   getStyle(prop, value) {
@@ -22,217 +188,40 @@ class AssetAllocationTable extends React.Component {
     style[prop] = value;
     return style;
   }
+  onDataChange = (id, value) => {
+    this.state.data.map((row, index) => {
+      if(index === id) {
+        row.targetPer=value;
+      }
+      return row;
+    })
+  }
+  renderRows() {
+    const { data } = this.state;
+    return data.map((row, index, array) => <TableRow key={index} data={row} id={index} onDataChange={this.onDataChange} />)
+  }
   render() {
-    const { open } = this.state;
-    const assetAlcClass = open?'out in':'out collapse';
+    const { data } = this.state;
     return (
-      <div className="allocationTableContainer" id="allocationTableContainer" style={{marginTop: "2px"}}>
-        <div id="targetAllocationPanel" className="card">
-          <div className="card-header">
-            <span className="navbar-brand color-light-blue"
-              data-toggle="collapse"
-              data-parent="#targetAllocationPanel"
-              href="#targetAllocationPanelBody"
-              onClick={()=>this.setState({open:!this.state.open})}>
-              {!open ?
-                  <FaPlusSquare /> : <FaMinusSquare />} Target Allocation Table
-            </span>
-            <div className="collapse navbar-collapse">
-              <ul className="navbar-nav">
-              </ul>
-            </div>
-            <ButtonGroup mainClass="float-right" buttons={["Summary", "Expanded", "Deep"]} btnClass="btn-light-white" />
-          </div>
-          <div id="targetAllocationPanelBody" className={"card-body "+assetAlcClass}>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-              <div className="collapse navbar-collapse">
-                <ButtonGroup btnClass="btn-slate-blue" buttons={["Add Security"]}  />
-              </div>
-              <ButtonGroup btnClass="btn-secondary" buttons={["Clear"]} />
-            </nav>
-            <table className="table fixed-table table-bordered table-striped text-dark targetAllocationTable">
-              <tbody>
-                <tr className="bg-light-grey">
-                  <td style={this.getStyle("width", 80)}>Symbol</td>
-                  <td style={this.getStyle("width", 120)}>Description</td>
-                  <td style={this.getStyle("width", 80)}>Sell/Buy Flag</td>
-                  <td style={this.getStyle("width", 80)}>Auto RBAL Eligibility</td>
-                  <td style={this.getStyle("width", 80)}>Value</td>
-                  <td style={this.getStyle("width", 80)}>Current %</td>
-                  <td style={this.getStyle("width", 120)}>Target %</td>
-                  <td style={this.getStyle("width", 80)}>Target $</td>
-                  <td style={this.getStyle("width", 80)}>Drift %</td>
-                  <td style={this.getStyle("width", 80)}>Drift $<br/>Buy/Sell</td>
-                  <td style={this.getStyle("width", 80)}>Cash</td>
-                  <td style={this.getStyle("width", 80)}>Fixed Income</td>
-                  <td style={this.getStyle("width", 50)}>Equity</td>
-                  <td style={this.getStyle("width", 80)}>Alternatives</td>
-                  <td style={this.getStyle("width", 80)}>Derivatives</td>
-                  <td style={this.getStyle("width", 80)}>Other</td>
-                </tr>
-                <tr>
-                  <td>cash</td>
-                  <td>cash</td>
-                  <td><FaFlag className="text-success" size="28" /></td>
-                  <td><FaCheckCircle className="text-success" size="28" /></td>
-                  <td>21,716 $</td>
-                  <td>21.12 %</td>
-                  <td><input type="text" className="form-control text-center" value="15"/></td>
-                  <td>21.12 %</td>
-                  <td>21,716 $</td>
-                  <td>21.12 %</td>
-                  <td>21,716 $</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>cash</td>
-                  <td>cash</td>
-                  <td className="abs-top-right">
-                    <FaFlag className="text-danger" size="28" /> <span className="abs-top-child text-secondary"><FaInfoCircle /></span>
-                  </td>
-                  <td className="abs-top-right">
-                    <FaCheckCircle className="text-danger" size="28" /> <span className="abs-top-child text-secondary"><FaInfoCircle /></span>
-                  </td>
-                  <td>21,716 $</td>
-                  <td>21.12 %</td>
-                  <td><input type="text" className="form-control text-center" value="15"/></td>
-                  <td>21.12 %</td>
-                  <td>21,716 $</td>
-                  <td>21.12 %</td>
-                  <td>21,716 $</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>cash</td>
-                  <td>cash</td>
-                  <td className="abs-top-right">
-                    <FaFlag className="text-danger" size="28" /> <span className="abs-top-child text-secondary"><FaInfoCircle /></span>
-                  </td>
-                  <td className="abs-top-right">
-                    <FaCheckCircle className="text-danger" size="28" /> <span className="abs-top-child text-secondary"><FaInfoCircle /></span>
-                  </td>
-                  <td>21,716 $</td>
-                  <td>21.12 %</td>
-                  <td><input type="text" className="form-control text-center" value="15"/></td>
-                  <td>21.12 %</td>
-                  <td>21,716 $</td>
-                  <td>21.12 %</td>
-                  <td>21,716 $</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>cash</td>
-                  <td>cash</td>
-                  <td className="abs-top-right">
-                    <FaFlag className="text-danger" size="28" /> <span className="abs-top-child text-secondary"><FaInfoCircle /></span>
-                  </td>
-                  <td className="abs-top-right">
-                    <FaCheckCircle className="text-danger" size="28" /> <span className="abs-top-child text-secondary"><FaInfoCircle /></span>
-                  </td>
-                  <td>21,716 $</td>
-                  <td>21.12 %</td>
-                  <td><input type="text" className="form-control text-center" value="15"/></td>
-                  <td>21.12 %</td>
-                  <td>21,716 $</td>
-                  <td>21.12 %</td>
-                  <td>21,716 $</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td>cash</td>
-                  <td>cash</td>
-                  <td className="abs-top-right">
-                    <FaFlag className="text-danger" size="28" /> <span className="abs-top-child text-secondary"><FaInfoCircle /></span>
-                  </td>
-                  <td className="abs-top-right">
-                    <FaCheckCircle className="text-danger" size="28" /> <span className="abs-top-child text-secondary"><FaInfoCircle /></span>
-                  </td>
-                  <td>21,716 $</td>
-                  <td>21.12 %</td>
-                  <td><input type="text" className="form-control text-center" value="15"/></td>
-                  <td>21.12 %</td>
-                  <td>21,716 $</td>
-                  <td>21.12 %</td>
-                  <td>21,716 $</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr className="font-weight-bold">
-                  <td></td>
-                  <td>Total:</td>
-                  <td></td>
-                  <td></td>
-                  <td>$102800</td>
-                  <td>100</td>
-                  <td>100</td>
-                  <td>$102800</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td>Add/Exclude Cash:</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>$102800</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr className="bg-secondary text-dark font-weight-bold">
-                  <td></td>
-                  <td>Net Total:</td>
-                  <td></td>
-                  <td></td>
-                  <td>$102800</td>
-                  <td>100</td>
-                  <td>100</td>
-                  <td>$102800</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+      <div className="allocationTableContainer" id="allocationTableContainer">
+        <div className="targetAllocationTableContainer">
+          <table className="table fixed-table table-striped table-bordered targetAllocationTable">
+            <tbody>
+              <tr className="">
+                <td style={this.getStyle("width", 30)}></td>
+                <td style={this.getStyle("width", 80)}>Symbol</td>
+                <td style={this.getStyle("width", 120)}>Description</td>
+                <td style={this.getStyle("width", 80)}>Value</td>
+                <td style={this.getStyle("width", 80)}>Current %</td>
+                <td style={this.getStyle("width", 120)}>Target % <FaInfoCircle /></td>
+                <td style={this.getStyle("width", 80)}>Target $</td>
+                <td style={this.getStyle("width", 80)}>Drift %</td>
+                <td style={this.getStyle("width", 80)}>Drift $<br/>Buy/Sell</td>
+              </tr>
+              {this.renderRows()}
+            </tbody>
+            <TableFooter data={data} />
+          </table>
         </div>
       </div>
     );
