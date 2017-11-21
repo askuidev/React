@@ -20,13 +20,14 @@ class ButtonGroup extends React.Component {
   }
   getButtons(buttons = []) {
     const { activeIndex } = this.state;
-    const { btnClass, withIcons } = this.props;
-    return buttons.map(({text, iconClass}, index) => {
-      let active = activeIndex === index ? "active" : "";
+    const { btnClass, withIcons, isGroup } = this.props;
+    return buttons.map(({text, iconClass, className=""}, index) => {
+      let active = (isGroup && activeIndex === index) ? "active" : "";
+      let btnClassname = className?className:"btn-default"
       return <button
         key={index}
         type="button"
-        className={"btn btn-default "+active+" "+btnClass}
+        className={"btn "+active+" "+btnClassname}
         onClick={this.onClick.bind(this, index)}>
         {withIcons?<span><Icon name={iconClass} /> {text}</span>:text}
       </button>

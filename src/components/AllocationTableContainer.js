@@ -15,27 +15,27 @@ class AllocationTableContainer extends Component {
       <div className="col-xs-6 no-padding">
         <ButtonGroup
           grouped={false}
+          isGroup={true}
           withIcons={false}
           mainClass="pull-left"
           activeIndex={0}
           buttons={[
-            {text: "Summary"},
-            {text: "Expanded"},
-            {text: "Deep"}
-          ]}
-          btnClass="btn-slate-blue" />
+            {text: "Summary", className: "btn-light-blue"},
+            {text: "Expanded", className: "btn-light-blue"},
+            {text: "Deep", className: "btn-light-blue"}
+          ]} />
       </div>
       <div className="col-xs-6 no-padding">
         <ButtonGroup
           grouped={true}
+          isGroup={true}
           withIcons={true}
           mainClass="pull-left"
           activeIndex={0}
           buttons={[
-            {iconClass: "percent"},
-            {iconClass: "dollar"}
-          ]}
-          btnClass="btn-slate-blue" />
+            {iconClass: "percent", className: "btn-light-blue"},
+            {iconClass: "dollar", className: "btn-light-blue"}
+          ]} />
       </div>
     </div>
   }
@@ -60,11 +60,12 @@ class AllocationTableContainer extends Component {
           </Panel>
         </div>
         <div className="col-sm-12 no-padding">
-          <Panel
-            mainClass="allocationPanel panel-transparent"
-            titleText="Rebalance Detail">
-            <RebalanceDetailForm />
-          </Panel>
+          {false?
+            <Panel
+              mainClass="allocationPanel panel-transparent"
+              titleText="Rebalance Detail">
+              <RebalanceDetailForm />
+            </Panel>:''}
         </div>
       </div>
     );

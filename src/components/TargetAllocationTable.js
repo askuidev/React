@@ -1,5 +1,10 @@
 import React from "react";
 import { render } from "react-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 import FaPlusSquare from 'react-icons/lib/fa/plus-square'
 import FaMinusSquare from 'react-icons/lib/fa/minus-square'
 import FaFlag from 'react-icons/lib/fa/flag'
@@ -84,7 +89,6 @@ class TableRow extends React.Component {
   render() {
     const { data, id } = this.props;
     return <tr>
-      <td style={this.getStyle("width", "20px")}>{data.color?this.getColorBox(data.color):""}</td>
       <td>{data.symbol}</td>
       <td>{data.description}</td>
       <td>{this.getRenderPrice(data.value)}</td>
@@ -116,13 +120,30 @@ class TableFooter extends React.Component {
   }
   getSearchInput() {
     return <div className="input-group allocationSearchInput">
-            <span className="input-group-addon input-lg"><Icon name="search" /></span>
+            <span className="input-group-addon"><Icon name="search" /></span>
             <input type="text"
-              className="form-control input-lg"
+              className="form-control"
               onChange={this.onSearchChange}
               value={this.state.searchText}
               placeholder="Add new" />
           </div>
+  }
+  getAdvancedSearchLink() {
+    return <Link className="color-light-blue" to="/">Advanced Security Search</Link>
+  }
+  getSaveSecurityTargetBtn() {
+    return <button className="btn btn-light-blue">Save Security Target</button>
+  }
+  getActionBtns() {
+    return <ButtonGroup
+            grouped={false}
+            isGroup={false}
+            withIcons={false}
+            mainClass="pull-right"
+            buttons={[
+              {text: "Cancel", className: "btn-transparent color-light-blue"},
+              {text: "Continue Auto Rebalance", className: "btn-light-blue active"}
+            ]} />
   }
   calculateTotal(field) {
     const { data } = this.props;
@@ -148,10 +169,8 @@ class TableFooter extends React.Component {
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
       </tr>
       <tr>
-        <td></td>
         <td></td>
         <td>Cash Addition/ Withdrawl</td>
         <td>{this.getRenderPrice(7780.00)}</td>
@@ -163,7 +182,6 @@ class TableFooter extends React.Component {
       </tr>
       <tr>
         <td></td>
-        <td></td>
         <td>Total:</td>
         <td>{this.getRenderPrice(this.calculateTotal("value"))}</td>
         <td>{this.calculateTotal("currentPer")}</td>
@@ -172,11 +190,22 @@ class TableFooter extends React.Component {
         <td></td>
         <td></td>
       </tr>
+      <tr>
+        <td colSpan="3">
+          {this.getAdvancedSearchLink()}
+        </td>
+        <td colSpan="2">
+          {this.getSaveSecurityTargetBtn()}
+        </td>
+        <td colSpan="3">
+          {this.getActionBtns()}
+        </td>
+      </tr>
     </tfoot>
   }
 }
 
-class AssetAllocationTable extends React.Component {
+class TargetAllocationTable extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -208,12 +237,11 @@ class AssetAllocationTable extends React.Component {
           <table className="table fixed-table table-striped table-bordered targetAllocationTable">
             <tbody>
               <tr className="">
-                <td style={this.getStyle("width", 30)}></td>
                 <td style={this.getStyle("width", 80)}>Symbol</td>
                 <td style={this.getStyle("width", 120)}>Description</td>
                 <td style={this.getStyle("width", 80)}>Value</td>
                 <td style={this.getStyle("width", 80)}>Current %</td>
-                <td style={this.getStyle("width", 120)}>Target % <FaInfoCircle /></td>
+                <td style={this.getStyle("width", 120)}>Target % <FaInfoCircle className="color-light-blue" /></td>
                 <td style={this.getStyle("width", 80)}>Target $</td>
                 <td style={this.getStyle("width", 80)}>Drift %</td>
                 <td style={this.getStyle("width", 80)}>Drift $<br/>Buy/Sell</td>
@@ -228,4 +256,4 @@ class AssetAllocationTable extends React.Component {
   }
 }
 
-export default AssetAllocationTable;
+export default TargetAllocationTable;

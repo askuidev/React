@@ -72,7 +72,7 @@ class AssetAllocationTable extends React.Component {
   render() {
     return (
       <div className="allocationTableContainer" id="allocationTableContainer">
-        <div className="targetAllocationTableContainer">
+        <div className="differenceAllocationTableContainer">
           <table className="table fixed-table table-striped">
             <tbody>
               <tr>
