@@ -240,11 +240,11 @@ class TargetAllocationTable extends React.Component {
                 <td style={this.getStyle("width", 80)}>Symbol</td>
                 <td style={this.getStyle("width", 120)}>Description</td>
                 <td style={this.getStyle("width", 80)}>Value</td>
-                <td style={this.getStyle("width", 80)}>Current %</td>
-                <td style={this.getStyle("width", 120)}>Target % <FaInfoCircle className="color-light-blue" /></td>
-                <td style={this.getStyle("width", 80)}>Target $</td>
-                <td style={this.getStyle("width", 80)}>Drift %</td>
-                <td style={this.getStyle("width", 80)}>Drift $<br/>Buy/Sell</td>
+                <td style={this.getStyle("width", 70)}>Current %</td>
+                <td style={this.getStyle("width", 70)}>Target % <FaInfoCircle className="color-light-blue" /></td>
+                <td style={this.getStyle("width", 70)}>Target $</td>
+                <td style={this.getStyle("width", 70)}>Drift %</td>
+                <td style={this.getStyle("width", 120)}>Drift $ Buy/Sell</td>
               </tr>
               {this.renderRows()}
             </tbody>

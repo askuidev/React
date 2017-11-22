@@ -9,6 +9,7 @@ html, body {
   border-radius: 0;
   border: 0;
   border-top: 4px solid #129ac3;
+  background-color: #f6f6f6;
 }
 .allocationPanel .panel-heading {
   background-color: #e9e9e9;
@@ -17,6 +18,9 @@ html, body {
 }
 .allocationPanel .panel-heading .main-heading {
   margin-bottom: 20px;
+}
+.differenceAllocationPanel .panel-heading .sub-heading {
+  padding: 6px;
 }
 .allocationPanel .panel-heading .panel-title {
   font-weight: bold;
@@ -115,6 +119,9 @@ html, body {
 }
 .allocationTableContainer .formContainer .table-transparent tr {
   background-color: transparent;
+}
+.differenceAllocationTableContainer tr td {
+  min-height: 40px;
 }
 
 /* common */

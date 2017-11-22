@@ -54,7 +54,7 @@ class AllocationTableContainer extends Component {
         </div>
         <div className="col-sm-3 no-padding">
           <Panel
-            mainClass="allocationPanel panel-transparent"
+            mainClass="allocationPanel differenceAllocationPanel panel-transparent"
             titleText="Security Allocation vs Target Allocation">
             <DifferenceAllocationTable />
           </Panel>

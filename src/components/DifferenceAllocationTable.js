@@ -46,7 +46,7 @@ class TableRow extends React.Component {
   render() {
     const { data } = this.props;
     return <tr>
-      <td style={this.getStyle("padding","4px")}>{this.getColorBox(data.color)}</td>
+      <td style={this.getStyle("padding","8px")}>{this.getColorBox(data.color)}</td>
       <td>{data.assetClass}</td>
       <td>{data.difference}</td>
     </tr>
