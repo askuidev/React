@@ -41,12 +41,12 @@ class TableRow extends React.Component {
     return style;
   }
   getColorBox(color) {
-    return <span className="square40" style={this.getStyle("backgroundColor",color)}></span>
+    return <span className="square50" style={this.getStyle("backgroundColor",color)}></span>
   }
   render() {
     const { data } = this.props;
     return <tr>
-      <td style={this.getStyle("padding","8px")}>{this.getColorBox(data.color)}</td>
+      <td style={this.getStyle("padding","3px")}>{this.getColorBox(data.color)}</td>
       <td>{data.assetClass}</td>
       <td>{data.difference}</td>
     </tr>
@@ -73,13 +73,15 @@ class AssetAllocationTable extends React.Component {
     return (
       <div className="allocationTableContainer" id="allocationTableContainer">
         <div className="differenceAllocationTableContainer">
-          <table className="table fixed-table table-striped">
-            <tbody>
+          <table className="table fixed-table table-striped table-custom">
+            <thead>
               <tr>
                 <td style={this.getStyle("width", 30)}></td>
                 <td style={this.getStyle("width", 100)}>Asset Class</td>
                 <td style={this.getStyle("width", 50)}>Difference</td>
               </tr>
+            </thead>
+            <tbody>
               {this.renderRows()}
             </tbody>
           </table>

@@ -8,7 +8,7 @@ html, body {
 .allocationPanel {
   border-radius: 0;
   border: 0;
-  border-top: 4px solid #129ac3;
+  border-top: 4px solid #4f86ca;
   background-color: #f6f6f6;
 }
 .allocationPanel .panel-heading {
@@ -28,7 +28,7 @@ html, body {
 }
 .allocationPanel .panel-body {
   padding: 0;
-  background-color: #f6f6f6;
+  background-color: #e9e9e9;
 }
 .securityTargetPanel {
   margin-right: 15px;
@@ -57,10 +57,6 @@ html, body {
   overflow: hidden;
   overflow-x: scroll;
 }
-.allocationTableContainer table {
-  font-size: 14px;
-  border-top: 0;
-}
 .allocationTableContainer .target-price-input {
   width: 80px !important;
   text-align: center;
@@ -75,6 +71,51 @@ html, body {
   padding-left: 2px;
   font-weight: normal;
   opacity: .7;
+}
+.allocationTableContainer .table-custom {
+  border-collapse: initial;
+}
+.allocationTableContainer .table-custom td {
+  vertical-align: middle;
+}
+.allocationTableContainer .table-striped.table-custom tbody tr,
+.allocationTableContainer .table-striped.table-custom tfoot tr {
+  background-color: #fff;
+}
+.allocationTableContainer .table-striped.table-custom tbody tr:nth-of-type(odd),
+.allocationTableContainer .table-striped.table-custom tfoot tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+.allocationTableContainer .table-custom thead td {
+  background-color: transparent;
+  font-weight: bold;
+}
+.allocationTableContainer .table-custom tbody td {
+  text-transform: uppercase;
+}
+.allocationTableContainer .table-custom tbody td,
+.allocationTableContainer .table-custom tfoot td {
+  border-bottom: 1px solid #bbb;
+  border-top: none;
+}
+.allocationTableContainer .table-custom tbody tr:first-child td {
+  border-top: 1px solid #bbb;
+}
+.allocationTableContainer .table-custom tbody td:first-child,
+.allocationTableContainer .table-custom tfoot td:first-child {
+  border-left: 1px solid #bbb;
+}
+.allocationTableContainer .table-custom tbody td:last-child,
+.allocationTableContainer .table-custom tfoot td:last-child {
+  border-right: 1px solid #bbb;
+}
+.allocationTableContainer .table-custom tfoot .table-footer-cell-padding {
+  padding: 13px;
+  padding-left: 8px;
+}
+/*.allocationTableContainer table {
+  font-size: 14px;
+  border-top: 0;
 }
 .allocationTableContainer table tr td {
   text-transform: uppercase;
@@ -107,7 +148,7 @@ html, body {
 }
 .allocationTableContainer table tbody tr:first-child {
   background-color: #e9e9e9;
-}
+}*/
 .allocationPanelContainer {
   padding: 20px;
   background-color: #e9e9e9;
@@ -119,9 +160,6 @@ html, body {
 }
 .allocationTableContainer .formContainer .table-transparent tr {
   background-color: transparent;
-}
-.differenceAllocationTableContainer tr td {
-  min-height: 40px;
 }
 
 /* common */
@@ -155,13 +193,13 @@ html, body {
   font-weight: normal;
 }
 .btn-light-blue.active {
-  background-color: #129ac3;
+  background-color: #4f86ca;
   color: #FFFFFF;
   box-shadow: none;
 }
 .btn-light-blue:hover,
 .btn-light-blue.active:hover {
-  background-color: #0d7696;
+  background-color: #5491dc;
   border-color: #0b89af;
   color: #FFFFFF;
   box-shadow: none;
@@ -196,10 +234,10 @@ html, body {
   border-color: #CCCCCC;
 }
 .border-light-blue {
-  border-color: #0e99c3;
+  border-color: #4f86ca;
 }
 .color-light-blue {
-  color: #0e99c3;
+  color: #4f86ca;
 }
 .color-slate-blue {
   color: #7B68EE !important;
@@ -217,7 +255,7 @@ html, body {
   background-color: #59036F;
 }
 .bg-dark-blue {
-  background-color: #025B97;
+  background-color: #4f86ca;
 }
 .bg-dark-orange {
   background-color: #FF9800;
@@ -260,12 +298,6 @@ html, body {
 .width-100 {
   width: 100%;
 }
-.square40 {
-  display: table;
-  padding: 0;
-  width: 40px;
-  height: 40px;
-}
 .square20 {
   display: table;
   padding: 0;
@@ -277,4 +309,22 @@ html, body {
   padding: 0;
   width: 30px;
   height: 30px;
+}
+.square40 {
+  display: table;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+}
+.square45 {
+  display: table;
+  padding: 0;
+  width: 45px;
+  height: 45px;
+}
+.square50 {
+  display: table;
+  padding: 0;
+  width: 50px;
+  height: 50px;
 }

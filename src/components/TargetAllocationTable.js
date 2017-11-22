@@ -47,6 +47,17 @@ const allocationData = [
     targetPrice: "10282.78",
     driftPer: "11.12",
     buySellPrice: "11433.89"
+  },
+  {
+    color: "red",
+    symbol: "FTFBX",
+    description: "Fidelity Total Bond Fund",
+    value: "21716.67",
+    currentPer: "21.12",
+    targetPer: "10.35",
+    targetPrice: "10282.78",
+    driftPer: "11.12",
+    buySellPrice: "11433.89"
   }
 ];
 
@@ -172,7 +183,7 @@ class TableFooter extends React.Component {
       </tr>
       <tr>
         <td></td>
-        <td>Cash Addition/ Withdrawl</td>
+        <td className="table-footer-cell-padding">Cash Addition/ Withdrawl</td>
         <td>{this.getRenderPrice(7780.00)}</td>
         <td></td>
         <td></td>
@@ -183,9 +194,9 @@ class TableFooter extends React.Component {
       <tr>
         <td></td>
         <td>Total:</td>
-        <td>{this.getRenderPrice(this.calculateTotal("value"))}</td>
+        <td className="table-footer-cell-padding">{this.getRenderPrice(this.calculateTotal("value"))}</td>
         <td>{this.calculateTotal("currentPer")}</td>
-        <td>{this.calculateTotal("targetPer")}</td>
+        <td className="text-center">{this.calculateTotal("targetPer")}</td>
         <td>{this.getRenderPrice(this.calculateTotal("targetPrice"))}</td>
         <td></td>
         <td></td>
@@ -234,8 +245,8 @@ class TargetAllocationTable extends React.Component {
     return (
       <div className="allocationTableContainer" id="allocationTableContainer">
         <div className="targetAllocationTableContainer">
-          <table className="table fixed-table table-striped table-bordered targetAllocationTable">
-            <tbody>
+          <table className="table fixed-table table-striped table-custom targetAllocationTable">
+            <thead>
               <tr className="">
                 <td style={this.getStyle("width", 80)}>Symbol</td>
                 <td style={this.getStyle("width", 120)}>Description</td>
@@ -246,6 +257,8 @@ class TargetAllocationTable extends React.Component {
                 <td style={this.getStyle("width", 70)}>Drift %</td>
                 <td style={this.getStyle("width", 120)}>Drift $ Buy/Sell</td>
               </tr>
+            </thead>
+            <tbody>
               {this.renderRows()}
             </tbody>
             <TableFooter data={data} />
