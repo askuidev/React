@@ -1,3 +1,5 @@
+/*@import '~pretty-checkbox/src/pretty-checkbox.scss';*/
+@import 'pretty-checkbox.css';
 
 *:focus {
   outline: none !important;
@@ -20,7 +22,7 @@ html, body {
   margin-bottom: 20px;
 }
 .differenceAllocationPanel .panel-heading .sub-heading {
-  padding: 6px;
+  padding: 5px;
 }
 .allocationPanel .panel-heading .panel-title {
   font-weight: bold;
@@ -34,20 +36,20 @@ html, body {
   margin-right: 15px;
 }
 
-.allocationTableContainer .button-group .btn {
+.allocationPanelContainer .button-group .btn {
   margin-left: 5px;
 }
-.allocationTableContainer .button-group .btn.focus,
-.allocationTableContainer .button-group .btn:focus{
+.allocationPanelContainer .button-group .btn.focus,
+.allocationPanelContainer .button-group .btn:focus{
   box-shadow: none;
 }
-.allocationTableContainer .button-group .btn:first-child {
+.allocationPanelContainer .button-group .btn:first-child {
   margin-left: 0;
 }
-.allocationTableContainer .button-group .grouped .btn {
+.allocationPanelContainer .button-group .grouped .btn {
   margin-left: 0;
 }
-.allocationTableContainer .button-group .btn:not([disabled]):not(.disabled).active {
+.allocationPanelContainer .button-group .btn:not([disabled]):not(.disabled).active {
   box-shadow: none !important;
 }
 .allocationTableContainer .rebalanceDetailForm .formContainer {
@@ -58,8 +60,12 @@ html, body {
   overflow-x: scroll;
 }
 .allocationTableContainer .target-price-input {
-  width: 80px !important;
+  width: 50px !important;
   text-align: center;
+  padding: 2px;
+  border-radius: 12px;
+  border-color: #999 !important;
+  margin-left: 10px;
 }
 .allocationTableContainer .allocationSearchInput .input-group-addon {
   background-color: transparent;
@@ -77,6 +83,7 @@ html, body {
 }
 .allocationTableContainer .table-custom td {
   vertical-align: middle;
+  padding: 5px;
 }
 .allocationTableContainer .table-striped.table-custom tbody tr,
 .allocationTableContainer .table-striped.table-custom tfoot tr {
@@ -113,10 +120,20 @@ html, body {
   padding: 13px;
   padding-left: 8px;
 }
+.allocationTableContainer .differenceAllocationTableContainer td {
+  font-size: 16px;
+}
 .allocationPanelContainer {
   padding: 20px;
   background-color: #e9e9e9;
   overflow: hidden;
+}
+.allocationPanelContainer .custom-checkbox {
+  top: 18px !important;
+  margin-right: 1.5em;
+}
+.allocationPanelContainer .custom-checkbox .state .icon {
+  color: #666;
 }
 .allocationTableContainer .formContainer {
   overflow: auto;
