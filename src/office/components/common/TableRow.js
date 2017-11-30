@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import CurrencyFormatter from 'currency-formatter';
 import Checkbox from './Checkbox';
 
@@ -22,6 +23,14 @@ class TableRow extends React.Component {
   getColorBox(color) {
     return <span className="square20" style={this.getStyle("backgroundColor",color)}></span>
   }
+  getAdjustCash({description, adjustCash}) {
+    return adjustCash?
+      <div>
+        <div>{description}</div>
+        <div><Link className="adjustCashLink" to="/" onClick={this.props.onAdjustCashClick}>Adjust Cash</Link></div>
+      </div>
+    :description;
+  }
   getRenderPrice(price) {
     return CurrencyFormatter.format(price, { code: 'USD' });
   }
@@ -43,7 +52,9 @@ class TableRow extends React.Component {
     const { data, id } = this.props;
     return <tr>
       <td>{data.symbol}</td>
-      <td>{data.description}</td>
+      <td>
+        {this.getAdjustCash(data)}
+      </td>
       <td>{this.getRenderPrice(data.value)}</td>
       <td>{data.currentPer}</td>
       <td className="text-center abs-top-right">{this.getTargetInput(id, data.targetPer)}{this.getTargetCheckbox(id)}</td>

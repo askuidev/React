@@ -1,5 +1,18 @@
 let allocationData = [
   {
+    adjustCash: true,
+    color: "",
+    symbol: "",
+    description: "Cash",
+    value: "21716.67",
+    currentPer: "21.12",
+    targetPer: "10.35",
+    targetPrice: "10282.78",
+    driftPer: "11.12",
+    buySellPrice: "11433.89"
+  },
+  {
+    adjustCash: false,
     color: "",
     symbol: "FTFBX",
     description: "Fidelity Total Bond Fund",
@@ -11,6 +24,7 @@ let allocationData = [
     buySellPrice: "11433.89"
   },
   {
+    adjustCash: false,
     color: "",
     symbol: "FTFBX",
     description: "Fidelity Total Bond Fund",
@@ -22,6 +36,7 @@ let allocationData = [
     buySellPrice: "11433.89"
   },
   {
+    adjustCash: false,
     color: "red",
     symbol: "FTFBX",
     description: "Fidelity Total Bond Fund",
@@ -33,6 +48,7 @@ let allocationData = [
     buySellPrice: "11433.89"
   },
   {
+    adjustCash: false,
     color: "red",
     symbol: "FTFBX",
     description: "Fidelity Total Bond Fund",
@@ -46,7 +62,11 @@ let allocationData = [
 ];
 
 let initialState = {
-  allocationData: allocationData
+  allocationData: allocationData,
+  adjustCash: {
+    actionType: "Withdraw",
+    actionValue: ""
+  }
 };
 
 function getUpdatedData(arr, data) {

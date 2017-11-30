@@ -142,10 +142,27 @@ html, body {
 .allocationTableContainer .formContainer .table-transparent tr {
   background-color: transparent;
 }
+.allocationTableContainer .advancedSearchLink {
+  padding: 6px;
+}
+.allocationTableContainer .adjustCashLink {
+  text-transform: capitalize;
+}
+
+/* Modal */
+.adjustCashModal .modal-content {
+  border-radius: 0;
+}
+.adjustCashForm label{
+  padding-left: 0;
+}
 
 /* common */
 .clearfix {
   overflow: auto;
+}
+.font-weight-normal {
+  font-weight: normal;
 }
 .fixed-table {
   table-layout: fixed;
@@ -258,6 +275,9 @@ html, body {
 }
 .bg-transparent {
   background-color: transparent !important;
+}
+.no-border-radius {
+  border-radius: 0;
 }
 .no-padding {
   padding: 0 !important;

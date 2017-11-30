@@ -68,7 +68,8 @@ class TableFooter extends React.Component {
     return <tfoot>
       <tr>
         <td colSpan="3">
-          {this.getSearchInput(allocationData.targetPer)}
+          <div className="pull-left">{this.getSearchInput(allocationData.targetPer)}</div>
+          <div className="advancedSearchLink pull-left">{this.getAdvancedSearchLink()}</div>
         </td>
         <td></td>
         <td></td>
@@ -98,7 +99,7 @@ class TableFooter extends React.Component {
       </tr>
       <tr>
         <td colSpan="3">
-          {this.getAdvancedSearchLink()}
+
         </td>
         <td colSpan="2">
           {this.getSaveSecurityTargetBtn()}

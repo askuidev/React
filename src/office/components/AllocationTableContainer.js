@@ -16,6 +16,7 @@ class AllocationTableContainer extends Component {
           withIcons={false}
           mainClass="pull-left"
           activeIndex={0}
+          buttonType="button"
           buttons={[
             {text: "Summary", className: "btn-light-blue"},
             {text: "Expanded", className: "btn-light-blue"},
@@ -29,6 +30,7 @@ class AllocationTableContainer extends Component {
           withIcons={true}
           mainClass="pull-left"
           activeIndex={0}
+          buttonType="button"
           buttons={[
             {iconClass: "percent", className: "btn-light-blue"},
             {iconClass: "dollar", className: "btn-light-blue"}

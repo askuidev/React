@@ -10,12 +10,12 @@ import {Icon} from 'react-fa';
 class ButtonGroup extends React.Component {
   componentWillMount() {
     const { activeIndex = 0 } = this.props;
-    this.setState({activeIndex});
+    this.setState({ activeIndex });
   }
   onClick = (activeIndex, e) => {
     this.setState({ activeIndex });
   }
-  getButtons(buttons = []) {
+  getButtonGroup(buttons = []) {
     const { activeIndex } = this.state;
     const { withIcons, isGroup } = this.props;
     return buttons.map(({text, iconClass, className=""}, index) => {
@@ -30,13 +30,54 @@ class ButtonGroup extends React.Component {
       </button>
     })
   }
-  render() {
+  getButtons() {
     const { mainClass = "", buttons = ["Empty Button"], grouped } = this.props;
     return <div className={"button-group "+mainClass}>
       {grouped?
         <div className="btn-group grouped">
-          {this.getButtons(buttons)}
-        </div>:this.getButtons(buttons)}
+          {this.getButtonGroup(buttons)}
+        </div>:this.getButtonGroup(buttons)}
+    </div>
+  }
+  onRadioChange = (e) => {
+    const { onRadioChange } = this.props;
+    if(onRadioChange) onRadioChange(e);
+  }
+  onRadioClick = (text, e) => {
+    this.setState({checkedRadio: text})
+  }
+  getRadioButton(data, index, checkedRadio) {
+    const {
+      name,
+      type,
+      defaultChecked = false,
+      text
+    } = data;
+    return <div className="checkbox" key={index}>
+      <label>
+        <input
+          type={type}
+          name={name}
+          checked={checkedRadio === text}
+          onClick={this.onRadioClick.bind(this, text)}
+          onChange={this.onRadioChange} /> {text}
+      </label>
+    </div>
+  }
+  getRadioButtons() {
+    const { checkedRadio } = this.state;
+    const { buttons = [] } = this.props;
+    return buttons.map((obj, index) => {
+      return this.getRadioButton(obj, index, checkedRadio);
+    });
+  }
+  render() {
+    const { buttonType } = this.props;
+    return <div>
+      {buttonType === "button" ?
+        this.getButtons(): null}
+      {buttonType === "radio" ?
+        this.getRadioButtons():null}
     </div>
   }
 }
