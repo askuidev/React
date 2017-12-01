@@ -9,4 +9,10 @@ const updateAllocationData = (data) => {
     data
   }
 }
-export default {getAllocationData, updateAllocationData};
+const updateAdjustCashData = (data) => {
+  return {
+    type: 'UPDATE_ADJUST_CASH_DATA',
+    data
+  }
+}
+export default {getAllocationData, updateAllocationData, updateAdjustCashData};

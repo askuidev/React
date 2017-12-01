@@ -12,7 +12,10 @@ class TargetAllocationTable extends React.Component {
   constructor() {
     super();
     this.state = {
-      showModal: false
+      showModal: false,
+      actionType: "",
+      actionValue: "",
+      actionId: null
     };
   }
   componentWillMount() {
@@ -27,15 +30,33 @@ class TargetAllocationTable extends React.Component {
     const data = {id, targetPer: value};
     this.props.dispatch(actions.updateAllocationData(data));
   }
-  onAdjustCashClick = () => {
+  onAdjustCashClick = (id) => {
     this.setState({
-      showModal: true
+      showModal: true,
+      rowId: id
     });
   }
   onModalHide = () => {
     this.setState({
       showModal: false
     });
+  }
+  onCheckChange = (actionId, {actionType}) => {
+    this.setState({
+      actionType,
+      actionId
+    });
+  }
+  onValueChange = (actionId, {actionValue}) => {
+    this.setState({
+      actionValue,
+      actionId
+    });
+  }
+  onSubmitClick = () => {
+    const { actionType, actionValue, actionId } = this.state;
+    this.props.dispatch(actions.updateAdjustCashData({actionType, actionValue, actionId}));
+    this.onModalHide();
   }
   renderRows() {
     const { allocationData } = this.props;
@@ -48,14 +69,25 @@ class TargetAllocationTable extends React.Component {
           onAdjustCashClick={this.onAdjustCashClick} />)
   }
   render() {
+    const { actionType, actionValue } = this.state;
+    const data = {
+      actionType,
+      actionValue
+    };
     return (
       <div className="allocationTableContainer" id="allocationTableContainer">
         <Modal
           mainClass="adjustCashModal"
           titleText="Adjust Cash"
           showModal={this.state.showModal}
-          onModalHide={this.onModalHide}>
-          <AdjustCashForm />
+          onModalHide={this.onModalHide}
+          onSubmitClick={this.onSubmitClick}>
+          <AdjustCashForm
+            id={this.state.rowId}
+            {...data}
+            onCheckChange={this.onCheckChange}
+            onValueChange={this.onValueChange}
+          />
         </Modal>
         <div className="targetAllocationTableContainer">
           <table className="table fixed-table table-striped table-custom targetAllocationTable">

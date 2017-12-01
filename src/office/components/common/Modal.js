@@ -3,7 +3,12 @@ import { Modal } from "react-bootstrap";
 
 class ModalComponent extends React.Component {
   onModalHide = () => {
-    if(this.props.onModalHide) this.props.onModalHide();
+    const { onModalHide } = this.props;
+    if(onModalHide) onModalHide();
+  }
+  onClick = () => {
+    const { onSubmitClick } = this.props;
+    if(onSubmitClick) onSubmitClick();
   }
   render() {
     const {
@@ -20,8 +25,8 @@ class ModalComponent extends React.Component {
           {children}
         </Modal.Body>
         <Modal.Footer>
-          <button className="btn btn-default">Close</button>
-          <button className="btn btn-primary btn-light-blue active">Save changes</button>
+          <button className="btn btn-default" onClick={this.onModalHide}>Close</button>
+          <button className="btn btn-primary btn-light-blue active" onClick={this.onClick}>Save changes</button>
         </Modal.Footer>
       </Modal>
     );

@@ -62,11 +62,7 @@ let allocationData = [
 ];
 
 let initialState = {
-  allocationData: allocationData,
-  adjustCash: {
-    actionType: "Withdraw",
-    actionValue: ""
-  }
+  allocationData: allocationData
 };
 
 function getUpdatedData(arr, data) {
@@ -78,14 +74,28 @@ function getUpdatedData(arr, data) {
   })
 }
 
+function getUpdatedAdjustCashData(arr, data) {
+  return arr.map((obj, index) => {
+    if(data.actionId === ++index) {
+      obj.actionType = data.actionType;
+      obj.actionValue = data.actionValue;
+    }
+    return obj;
+  })
+}
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'GET_ALLOCATION_DATA':
       state = Object.assign({}, state)
       break;
     case 'UPDATE_ALLOCATION_DATA':
-      const updatedData = getUpdatedData(state.allocationData, action.data);
-      state = Object.assign({}, state, {allocationData: updatedData});
+      const updatedAllocationData = getUpdatedData(state.allocationData, action.data);
+      state = Object.assign({}, state, {allocationData: updatedAllocationData});
+      break;
+    case 'UPDATE_ADJUST_CASH_DATA':
+      const updatedAdjustCashData = getUpdatedAdjustCashData(state.allocationData, action.data);
+      state = Object.assign({}, state, {allocationData: updatedAdjustCashData});
       break;
     default:
 

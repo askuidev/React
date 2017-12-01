@@ -5,11 +5,13 @@ import * as actions from "../actions";
 import ButtonGroup from './common/ButtonGroup';
 
 class AdjustCashForm extends React.Component {
-  onCheckChange = (e) => {
-
+  onCheckChange = (value, e) => {
+    const { id, onCheckChange } = this.props;
+    if(onCheckChange) onCheckChange(id, {actionType: value}, e);
   }
   onValueChange = (e) => {
-
+    const { id, onValueChange } = this.props;
+    if(onValueChange) onValueChange(id, {actionValue: e.target.value}, e);
   }
   render() {
     const {
@@ -22,6 +24,7 @@ class AdjustCashForm extends React.Component {
             <label className="control-label font-weight-normal">Please select your action below:</label>
             <ButtonGroup
               onRadioChange={this.onCheckChange}
+              checkedRadio={this.props.actionType}
               buttonType="radio"
               buttons={[
                 {text: "Withdraw", type: "radio", name: "actions"},
@@ -32,7 +35,8 @@ class AdjustCashForm extends React.Component {
             <input
               className="form-control"
               placeholder="Enter value"
-              onChange={this.onValueChange} />
+              onChange={this.onValueChange}
+              value={this.props.actionValue || ""} />
           </div>
         </div>
       </div>

@@ -9,8 +9,8 @@ import {Icon} from 'react-fa';
  */
 class ButtonGroup extends React.Component {
   componentWillMount() {
-    const { activeIndex = 0 } = this.props;
-    this.setState({ activeIndex });
+    const { activeIndex = 0, checkedRadio=null } = this.props;
+    this.setState({ activeIndex, checkedRadio });
   }
   onClick = (activeIndex, e) => {
     this.setState({ activeIndex });
@@ -40,17 +40,16 @@ class ButtonGroup extends React.Component {
     </div>
   }
   onRadioChange = (e) => {
-    const { onRadioChange } = this.props;
-    if(onRadioChange) onRadioChange(e);
   }
   onRadioClick = (text, e) => {
-    this.setState({checkedRadio: text})
+    const { onRadioChange } = this.props;
+    this.setState({checkedRadio: text});
+    if(onRadioChange) onRadioChange(text, e);
   }
   getRadioButton(data, index, checkedRadio) {
     const {
       name,
       type,
-      defaultChecked = false,
       text
     } = data;
     return <div className="checkbox" key={index}>
