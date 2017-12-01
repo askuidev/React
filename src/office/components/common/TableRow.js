@@ -23,13 +23,15 @@ class TableRow extends React.Component {
   getColorBox(color) {
     return <span className="square20" style={this.getStyle("backgroundColor",color)}></span>
   }
-  getAdjustCash(id, {description, adjustCash, actionValue}) {
+  getAdjustCash(id, {description, adjustCash, actionType, actionValue}) {
+    const actionPrice = this.getRenderPrice(actionValue);
+    const actionText = actionType === "Withdraw"?actionPrice+"_WD":actionPrice+"_AD";
     return adjustCash?
       <div>
         <div>{description}</div>
         <div><Link className="adjustCashLink" to="/" onClick={this.props.onAdjustCashClick.bind(this, id)}>
           {actionValue?
-            this.getRenderPrice(actionValue):"Adjust Cash"}
+            actionText:"Adjust Cash"}
         </Link></div>
       </div>
     :description;
