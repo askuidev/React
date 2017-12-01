@@ -58,6 +58,11 @@ class TargetAllocationTable extends React.Component {
     this.props.dispatch(actions.updateAdjustCashData({actionType, actionValue, actionId}));
     this.onModalHide();
   }
+  onClearClick = () => {
+    this.setState({
+      actionValue: ""
+    });
+  }
   renderRows() {
     const { allocationData } = this.props;
     return allocationData.map((row, index, array) =>
@@ -87,6 +92,7 @@ class TargetAllocationTable extends React.Component {
             {...data}
             onCheckChange={this.onCheckChange}
             onValueChange={this.onValueChange}
+            onClearClick={this.onClearClick}
           />
         </Modal>
         <div className="targetAllocationTableContainer">

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as actions from "../actions";
 import ButtonGroup from './common/ButtonGroup';
+import MdRefresh from 'react-icons/lib/md/refresh';
 
 class AdjustCashForm extends React.Component {
   onCheckChange = (value, e) => {
@@ -12,6 +13,10 @@ class AdjustCashForm extends React.Component {
   onValueChange = (e) => {
     const { id, onValueChange } = this.props;
     if(onValueChange) onValueChange(id, {actionValue: e.target.value}, e);
+  }
+  onClearClick = () => {
+    const { onClearClick } = this.props;
+    if(onClearClick) onClearClick();
   }
   render() {
     const {
@@ -32,11 +37,21 @@ class AdjustCashForm extends React.Component {
               ]} />
           </div>
           <div className="form-group">
-            <input
-              className="form-control"
-              placeholder="Enter value"
-              onChange={this.onValueChange}
-              value={this.props.actionValue || ""} />
+            <div className="input-group">
+              <input
+                className="form-control"
+                placeholder="Enter value"
+                onChange={this.onValueChange}
+                value={this.props.actionValue || ""} />
+              <span className="input-group-btn">
+                <button type="button"
+                  className="btn btn-default btn-transparent"
+                  onClick={this.onClearClick}>
+                  <MdRefresh className="clearIcon" />
+                  <span className="clearText">Clear</span>
+                </button>
+              </span>
+            </div>
           </div>
         </div>
       </div>
