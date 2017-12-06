@@ -2,9 +2,7 @@ import React from "react";
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import actions from '../actions';
-import FaInfoCircle from 'react-icons/lib/fa/info-circle';
-import TableRow from './common/TableRow';
-import TableFooter from './common/TableFooter';
+import Table from './common/Table';
 import Modal from './common/Modal';
 import AdjustCashForm from './AdjustCashForm';
 
@@ -12,50 +10,30 @@ class TargetAllocationTable extends React.Component {
   constructor() {
     super();
     this.state = {
-      showModal: false,
       actionType: "",
       actionValue: "",
-      actionId: null
+      id: null
     };
   }
   componentWillMount() {
     this.props.dispatch(actions.getAllocationData());
   }
-  getStyle(prop, value) {
-    const style = {};
-    style[prop] = value;
-    return style;
-  }
-  onDataChange = (value, id) => {
-    const data = {id, targetPer: value};
-    this.props.dispatch(actions.updateAllocationData(data));
-  }
-  onAdjustCashClick = (id) => {
-    this.setState({
-      showModal: true,
-      rowId: id
-    });
-  }
   onModalHide = () => {
+    this.props.dispatch(actions.handleAdjustCashModal("hide"));
+  }
+  onCheckChange = ({actionType}) => {
     this.setState({
-      showModal: false
+      actionType
     });
   }
-  onCheckChange = (actionId, {actionType}) => {
+  onValueChange = ({actionValue}) => {
     this.setState({
-      actionType,
-      actionId
-    });
-  }
-  onValueChange = (actionId, {actionValue}) => {
-    this.setState({
-      actionValue,
-      actionId
+      actionValue
     });
   }
   onSubmitClick = () => {
-    const { actionType, actionValue, actionId } = this.state;
-    this.props.dispatch(actions.updateAdjustCashData({actionType, actionValue, actionId}));
+    const { allocationData } = this.props;
+    this.props.dispatch(actions.updateAdjustCashData(allocationData, {...this.state}));
     this.onModalHide();
   }
   onClearClick = () => {
@@ -63,18 +41,15 @@ class TargetAllocationTable extends React.Component {
       actionValue: ""
     });
   }
-  renderRows() {
-    const { allocationData } = this.props;
-    return allocationData.map((row, index, array) =>
-        <TableRow
-          key={index}
-          data={row}
-          id={index+1}
-          onDataChange={this.onDataChange}
-          onAdjustCashClick={this.onAdjustCashClick} />)
+  onAdjustCashClick = (id) => {
+    this.props.dispatch(actions.handleAdjustCashModal("open"));
+    this.setState({
+      id
+    });
   }
   render() {
     const { actionType, actionValue } = this.state;
+    const { showAdjustCashModal, allocationData } = this.props;
     const data = {
       actionType,
       actionValue
@@ -84,36 +59,17 @@ class TargetAllocationTable extends React.Component {
         <Modal
           mainClass="adjustCashModal"
           titleText="Adjust Cash"
-          showModal={this.state.showModal}
+          showModal={showAdjustCashModal}
           onModalHide={this.onModalHide}
           onSubmitClick={this.onSubmitClick}>
           <AdjustCashForm
-            id={this.state.rowId}
             {...data}
             onCheckChange={this.onCheckChange}
             onValueChange={this.onValueChange}
-            onClearClick={this.onClearClick}
-          />
+            onClearClick={this.onClearClick} />
         </Modal>
         <div className="targetAllocationTableContainer">
-          <table className="table fixed-table table-striped table-custom targetAllocationTable">
-            <thead>
-              <tr className="">
-                <td style={this.getStyle("width", 80)}>Symbol</td>
-                <td style={this.getStyle("width", 120)}>Description</td>
-                <td style={this.getStyle("width", 80)}>Value</td>
-                <td style={this.getStyle("width", 50)}>Current %</td>
-                <td className="text-center" style={this.getStyle("width", 70)}>Target % <FaInfoCircle /></td>
-                <td style={this.getStyle("width", 70)}>Target $</td>
-                <td style={this.getStyle("width", 70)}>Drift %</td>
-                <td style={this.getStyle("width", 120)}>Drift $ Buy/Sell</td>
-              </tr>
-            </thead>
-            <tbody>
-              {this.renderRows()}
-            </tbody>
-            <TableFooter />
-          </table>
+          <Table {...this.props} onAdjustCashClick={this.onAdjustCashClick} />
         </div>
       </div>
     );
@@ -121,7 +77,7 @@ class TargetAllocationTable extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return {...state}
+  return { ...state }
 }
 
 const mapDispatchToProps = (dispatch) => {

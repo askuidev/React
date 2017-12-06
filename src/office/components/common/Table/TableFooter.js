@@ -1,11 +1,11 @@
 import React from "react";
-import { bindActionCreators } from 'redux';
-import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import { Icon } from 'react-fa';
-import CurrencyFormatter from 'currency-formatter';
-import actions from '../../actions';
-import ButtonGroup from './ButtonGroup';
+import ButtonGroup from '../ButtonGroup';
+import {
+  getPriceFormat,
+  getCalculatedTotal
+} from '../../../utils'
 
 class TableFooter extends React.Component {
   constructor(props) {
@@ -13,16 +13,6 @@ class TableFooter extends React.Component {
     this.state = {
       searchText: ""
     }
-  }
-  componentDidUpdate() {
-  }
-  getStyle(prop, value) {
-    const style = {};
-    style[prop] = value;
-    return style;
-  }
-  getRenderPrice(price) {
-    return CurrencyFormatter.format(price, { code: 'USD' });
   }
   getSearchInput() {
     return <div className="input-group allocationSearchInput">
@@ -46,6 +36,8 @@ class TableFooter extends React.Component {
             isGroup={false}
             withIcons={false}
             mainClass="pull-right"
+            activeIndex={0}
+            buttonType="button"
             buttons={[
               {text: "Cancel", className: "btn-transparent color-light-blue"},
               {text: "Continue Auto Rebalance", className: "btn-light-blue active"}
@@ -56,19 +48,12 @@ class TableFooter extends React.Component {
       searchText: e.target.value
     });
   }
-  getCalculatedTotal = (field) => {
-    const { allocationData } = this.props;
-    let total = allocationData.reduceRight((prevValue, obj) => {
-      return prevValue + +obj[field];
-    },0);
-    return total.toFixed(2);
-  }
   render() {
-    const { allocationData } = this.props;
+    const { allocationData:data } = this.props;
     return <tfoot>
       <tr>
         <td colSpan="3">
-          <div className="pull-left">{this.getSearchInput(allocationData.targetPer)}</div>
+          <div className="pull-left">{this.getSearchInput(data.targetPer)}</div>
           <div className="advancedSearchLink pull-left">{this.getAdvancedSearchLink()}</div>
         </td>
         <td></td>
@@ -80,7 +65,7 @@ class TableFooter extends React.Component {
       <tr>
         <td></td>
         <td className="table-footer-cell-padding">Cash Addition/ Withdrawl</td>
-        <td>{this.getRenderPrice(7780.00)}</td>
+        <td>{getPriceFormat(7780.00)}</td>
         <td></td>
         <td></td>
         <td></td>
@@ -90,10 +75,10 @@ class TableFooter extends React.Component {
       <tr>
         <td></td>
         <td>Total:</td>
-        <td className="table-footer-cell-padding">{this.getRenderPrice(this.getCalculatedTotal("value"))}</td>
-        <td>{this.getCalculatedTotal("currentPer")}</td>
-        <td className="text-center">{this.getCalculatedTotal("targetPer")}</td>
-        <td>{this.getRenderPrice(this.getCalculatedTotal("targetPrice"))}</td>
+        <td className="table-footer-cell-padding">{getPriceFormat(getCalculatedTotal(data, "value"))}</td>
+        <td>{getCalculatedTotal(data, "currentPer")}</td>
+        <td className="text-center">{getCalculatedTotal(data, "targetPer")}</td>
+        <td>{getPriceFormat(getCalculatedTotal(data, "targetPrice"))}</td>
         <td></td>
         <td></td>
       </tr>
@@ -112,13 +97,4 @@ class TableFooter extends React.Component {
   }
 }
 
-
-const mapStateToProps = (state) => {
-  return {...state}
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return { ...bindActionCreators(actions, dispatch), dispatch }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TableFooter);
+export default TableFooter;

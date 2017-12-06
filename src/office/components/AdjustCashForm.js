@@ -7,12 +7,12 @@ import MdRefresh from 'react-icons/lib/md/refresh';
 
 class AdjustCashForm extends React.Component {
   onCheckChange = (value, e) => {
-    const { id, onCheckChange } = this.props;
-    if(onCheckChange) onCheckChange(id, {actionType: value}, e);
+    const { onCheckChange } = this.props;
+    if(onCheckChange) onCheckChange({actionType: value}, e);
   }
   onValueChange = (e) => {
-    const { id, onValueChange } = this.props;
-    if(onValueChange) onValueChange(id, {actionValue: e.target.value}, e);
+    const { onValueChange } = this.props;
+    if(onValueChange) onValueChange({actionValue: e.target.value}, e);
   }
   onClearClick = () => {
     const { onClearClick } = this.props;

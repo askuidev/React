@@ -1,78 +1,54 @@
 import React from "react";
-
-const assetData = [
-  {
-    color: "#83C7BA",
-    assetClass: "cash",
-    difference: "5%"
-  },
-  {
-    color: "#59036F",
-    assetClass: "fixed income",
-    difference: "5%"
-  },
-  {
-    color: "#025B97",
-    assetClass: "cash",
-    difference: "5%"
-  },
-  {
-    color: "#FF9800",
-    assetClass: "cash",
-    difference: "5%"
-  }
-];
+import { bindActionCreators } from 'redux';
+import { connect } from "react-redux";
+import actions from '../actions';
+import { getStyle } from '../utils';
+import NoDataRow from './common/Table/NoDataRow';
 
 class TableRow extends React.Component {
-  getStyle(prop, value) {
-    const style = {};
-    style[prop] = value;
-    return style;
-  }
   getColorBox(color) {
-    return <span className="square40" style={this.getStyle("backgroundColor",color)}></span>
+    return <span className="square40" style={getStyle("backgroundColor",color)}></span>
   }
-  render() {
+  getRow() {
     const { data } = this.props;
     return <tr>
-      <td style={this.getStyle("padding","5px")}>{this.getColorBox(data.color)}</td>
-      <td>{data.assetClass}</td>
-      <td>{data.difference}</td>
-    </tr>
+        <td style={getStyle("padding","5px")}>{this.getColorBox(data.color)}</td>
+        <td>{data.assetClass}</td>
+        <td>{data.difference}</td>
+      </tr>
+  }
+  render() {
+    const { noData } = this.props;
+    return noData?this.noDataRow():this.getRow();
   }
 }
 
-class AssetAllocationTable extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      data: assetData
-    };
-  }
-  getStyle(prop, value) {
-    const style = {};
-    style[prop] = value;
-    return style;
+class DifferenceAllocationTable extends React.Component {
+  componentWillMount() {
+    this.props.dispatch(actions.getAssetData());
   }
   renderRows() {
-    const { data } = this.state;
-    return data.map((row, index) => <TableRow key={index} data={row} />)
+    const { assetData } = this.props;
+    return assetData.map((row, index) => <TableRow key={index} data={row} />)
   }
   render() {
+    const { assetData } = this.props;
     return (
       <div className="allocationTableContainer" id="allocationTableContainer">
         <div className="differenceAllocationTableContainer">
           <table className="table fixed-table table-striped table-custom">
             <thead>
               <tr>
-                <td style={this.getStyle("width", 30)}></td>
-                <td style={this.getStyle("width", 100)}>Asset Class</td>
-                <td style={this.getStyle("width", 50)}>Difference</td>
+                <td style={getStyle("width", 30)}></td>
+                <td style={getStyle("width", 100)}>Asset Class</td>
+                <td style={getStyle("width", 50)}>Difference</td>
               </tr>
             </thead>
-            <tbody>
-              {this.renderRows()}
-            </tbody>
+            {assetData && assetData[0] ?
+              <tbody>
+                {this.renderRows()}
+              </tbody>:
+              <NoDataRow colSpan="3" message="No data found!" />}
           </table>
         </div>
       </div>
@@ -80,4 +56,12 @@ class AssetAllocationTable extends React.Component {
   }
 }
 
-export default AssetAllocationTable;
+const mapStateToProps = (state) => {
+  return { ...state }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return { ...bindActionCreators(actions, dispatch), dispatch }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DifferenceAllocationTable);

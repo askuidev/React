@@ -1,106 +1,52 @@
-let allocationData = [
-  {
-    adjustCash: true,
-    color: "",
-    symbol: "",
-    description: "Cash",
-    value: "21716.67",
-    currentPer: "21.12",
-    targetPer: "10.35",
-    targetPrice: "10282.78",
-    driftPer: "11.12",
-    buySellPrice: "11433.89"
-  },
-  {
-    adjustCash: false,
-    color: "",
-    symbol: "FTFBX",
-    description: "Fidelity Total Bond Fund",
-    value: "21716.67",
-    currentPer: "21.12",
-    targetPer: "10.35",
-    targetPrice: "10282.78",
-    driftPer: "11.12",
-    buySellPrice: "11433.89"
-  },
-  {
-    adjustCash: false,
-    color: "",
-    symbol: "FTFBX",
-    description: "Fidelity Total Bond Fund",
-    value: "21716.67",
-    currentPer: "21.12",
-    targetPer: "10.35",
-    targetPrice: "10282.78",
-    driftPer: "11.12",
-    buySellPrice: "11433.89"
-  },
-  {
-    adjustCash: false,
-    color: "red",
-    symbol: "FTFBX",
-    description: "Fidelity Total Bond Fund",
-    value: "21716.67",
-    currentPer: "21.12",
-    targetPer: "10.35",
-    targetPrice: "10282.78",
-    driftPer: "11.12",
-    buySellPrice: "11433.89"
-  },
-  {
-    adjustCash: false,
-    color: "red",
-    symbol: "FTFBX",
-    description: "Fidelity Total Bond Fund",
-    value: "21716.67",
-    currentPer: "21.12",
-    targetPer: "10.35",
-    targetPrice: "10282.78",
-    driftPer: "11.12",
-    buySellPrice: "11433.89"
-  }
-];
+import {
+  createStore,
+  applyMiddleware
+} from 'redux';
+import thunk from 'redux-thunk';
+import utils from '../utils';
+
+const {
+  getUpdatedAllocationData,
+  getUpdatedAdjustCashData
+} = utils;
 
 let initialState = {
-  allocationData: allocationData
+  allocationData: [],
+  assetData: [],
+  showAdjustCashModal: false
 };
-
-function getUpdatedData(arr, data) {
-  return arr.map((obj, index) => {
-    if(data.id === ++index) {
-      obj.targetPer = data.targetPer
-    }
-    return obj;
-  })
-}
-
-function getUpdatedAdjustCashData(arr, data) {
-  return arr.map((obj, index) => {
-    if(data.actionId === ++index) {
-      obj.actionType = data.actionType;
-      obj.actionValue = data.actionValue;
-    }
-    return obj;
-  })
-}
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'GET_ALLOCATION_DATA':
-      state = Object.assign({}, state)
+    case 'GET_ALLOCATION_DATA_SUCCESS':
+      state = Object.assign({}, state, {allocationData: action.data})
+      break;
+    case 'GET_ASSET_DATA_SUCCESS':
+      state = Object.assign({}, state, {assetData: action.data})
       break;
     case 'UPDATE_ALLOCATION_DATA':
-      const updatedAllocationData = getUpdatedData(state.allocationData, action.data);
+      const updatedAllocationData = getUpdatedAllocationData(state.allocationData, action.data);
       state = Object.assign({}, state, {allocationData: updatedAllocationData});
       break;
-    case 'UPDATE_ADJUST_CASH_DATA':
+    case 'UPDATE_ADJUST_CASH_DATA_SUCCESS':
       const updatedAdjustCashData = getUpdatedAdjustCashData(state.allocationData, action.data);
       state = Object.assign({}, state, {allocationData: updatedAdjustCashData});
+      break;
+    case 'SHOW_ADJUST_CASH_MODAL':
+      state = Object.assign({}, state, {showAdjustCashModal: true});
+      break;
+    case 'HIDE_ADJUST_CASH_MODAL':
+      state = Object.assign({}, state, {showAdjustCashModal: false});
       break;
     default:
 
   }
+  console.log(state);
   return state;
 }
 
-export default reducer;
+const configureStore = () => {
+  return createStore(reducer, initialState, applyMiddleware(thunk));
+}
+
+export default configureStore;
