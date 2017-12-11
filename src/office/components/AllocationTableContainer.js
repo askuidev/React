@@ -7,49 +7,11 @@ import Panel from './common/Panel';
 import ButtonGroup from './common/ButtonGroup';
 
 class AllocationTableContainer extends Component {
-  getSubHeader() {
-    return <div>
-      <div className="col-xs-6 no-padding">
-        <ButtonGroup
-          grouped={false}
-          isGroup={true}
-          withIcons={false}
-          mainClass="pull-left"
-          activeIndex={0}
-          buttonType="button"
-          buttons={[
-            {text: "Summary", className: "btn-light-blue"},
-            {text: "Expanded", className: "btn-light-blue"},
-            {text: "Deep", className: "btn-light-blue"}
-          ]} />
-      </div>
-      <div className="col-xs-6 no-padding">
-        <ButtonGroup
-          grouped={true}
-          isGroup={true}
-          withIcons={true}
-          mainClass="pull-left"
-          activeIndex={0}
-          buttonType="button"
-          buttons={[
-            {iconClass: "percent", className: "btn-light-blue"},
-            {iconClass: "dollar", className: "btn-light-blue"}
-          ]} />
-      </div>
-    </div>
-  }
   render() {
     return (
       <div className="allocationPanelContainer">
         <div className="col-sm-9 no-padding">
-          <Panel
-            mainClass="allocationPanel securityTargetPanel panel-transparent"
-            titleText="Security Target"
-            subHeadingChildren={
-              this.getSubHeader()
-            }>
-            <TargetAllocationTable />
-          </Panel>
+          <TargetAllocationTable />
         </div>
         <div className="col-sm-3 no-padding">
           <Panel

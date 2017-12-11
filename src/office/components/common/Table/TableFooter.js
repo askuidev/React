@@ -78,7 +78,7 @@ class TableFooter extends React.Component {
         <td className="table-footer-cell-padding">{getPriceFormat(getCalculatedTotal(data, "value"))}</td>
         <td>{getCalculatedTotal(data, "currentPer")}</td>
         <td className="text-center">{getCalculatedTotal(data, "targetPer")}</td>
-        <td>{getPriceFormat(getCalculatedTotal(data, "targetPrice"))}</td>
+        <td className="text-center">{getPriceFormat(getCalculatedTotal(data, "targetPrice"))}</td>
         <td></td>
         <td></td>
       </tr>

@@ -1,8 +1,9 @@
+const baseUrl = 'http://5a2de0ee0e07b700120839f5.mockapi.io';
 const config = {
   'dev': {
-    baseUrl: '',
-    allocationDataUrl: 'http://5a24df7c3a6dd70012db4fb2.mockapi.io/allocationData',
-    assetDataUrl: 'http://5a24df7c3a6dd70012db4fb2.mockapi.io/assetData'
+    baseUrl: baseUrl,
+    allocationDataUrl: baseUrl+'/allocationData',
+    assetDataUrl: baseUrl+'/assetData'
   }
 };
 

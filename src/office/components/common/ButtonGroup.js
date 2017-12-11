@@ -1,5 +1,5 @@
 import React from 'react';
-import {Icon} from 'react-fa';
+import { Icon } from 'react-fa';
 
 /**
  * A ButtonGroup whose buttons act like a radio button.
@@ -8,24 +8,20 @@ import {Icon} from 'react-fa';
  * onChange handler like you would with regular form inputs.
  */
 class ButtonGroup extends React.Component {
-  componentWillMount() {
-    const { activeIndex = 0, checkedRadio=null } = this.props;
-    this.setState({ activeIndex, checkedRadio });
-  }
-  onClick = (activeIndex, e) => {
-    this.setState({ activeIndex });
+  onButtonGroupClick = (field) => {
+    const { onButtonGroupClick } = this.props;
+    if(onButtonGroupClick) onButtonGroupClick(field);
   }
   getButtonGroup(buttons = []) {
-    const { activeIndex } = this.state;
-    const { withIcons, isGroup } = this.props;
-    return buttons.map(({text, iconClass, className=""}, index) => {
-      let active = (isGroup && activeIndex === index) ? "active" : "";
+    const { withIcons, isGroup, activeBtn } = this.props;
+    return buttons.map(({text, field, iconClass, className=""}, index) => {
+      let active = (isGroup && activeBtn === field) ? "active" : "";
       let btnClassname = className?className:"btn-default"
       return <button
         key={index}
         type="button"
         className={"btn "+active+" "+btnClassname}
-        onClick={this.onClick.bind(this, index)}>
+        onClick={this.onButtonGroupClick.bind(this, field)}>
         {withIcons?<span><Icon name={iconClass} /> {text}</span>:text}
       </button>
     })
@@ -64,8 +60,7 @@ class ButtonGroup extends React.Component {
     </div>
   }
   getRadioButtons() {
-    const { checkedRadio } = this.state;
-    const { buttons = [] } = this.props;
+    const { buttons = [], checkedRadio } = this.props;
     return buttons.map((obj, index) => {
       return this.getRadioButton(obj, index, checkedRadio);
     });

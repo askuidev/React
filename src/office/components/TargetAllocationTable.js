@@ -3,74 +3,64 @@ import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import actions from '../actions';
 import Table from './common/Table';
-import Modal from './common/Modal';
-import AdjustCashForm from './AdjustCashForm';
+import TableControls from './common/Table/TableControls';
+import Panel from './common/Panel';
+import AdjustCashModal from './AdjustCashModal';
 
 class TargetAllocationTable extends React.Component {
   constructor() {
     super();
     this.state = {
-      actionType: "",
-      actionValue: "",
-      id: null
+      leftGroupActive: "summary",
+      middleGroupActive: "percent"
     };
   }
   componentWillMount() {
-    this.props.dispatch(actions.getAllocationData());
+    this.props.getAllocationData();
   }
-  onModalHide = () => {
-    this.props.dispatch(actions.handleAdjustCashModal("hide"));
-  }
-  onCheckChange = ({actionType}) => {
+  onLeftGroupClick = (leftGroupActive) => {
     this.setState({
-      actionType
+      leftGroupActive
     });
   }
-  onValueChange = ({actionValue}) => {
+  onMiddleGroupClick = (middleGroupActive) => {
     this.setState({
-      actionValue
+      middleGroupActive
     });
   }
-  onSubmitClick = () => {
-    const { allocationData } = this.props;
-    this.props.dispatch(actions.updateAdjustCashData(allocationData, {...this.state}));
-    this.onModalHide();
+  onAdjustCashClick = (data) => {
+    this.props.handleAdjustCashModal({type: "open", data});
   }
-  onClearClick = () => {
-    this.setState({
-      actionValue: ""
-    });
+  onDataChange = ({value, id, field}) => {
+    const { allocationData, allocationId } = this.props;
+    this.props.updateAllocationTargetData(allocationData, {value, id, field});
   }
-  onAdjustCashClick = (id) => {
-    this.props.dispatch(actions.handleAdjustCashModal("open"));
-    this.setState({
-      id
-    });
+  getSubHeader() {
+    const { leftGroupActive, middleGroupActive } = this.state;
+    return <TableControls
+      leftGroupActive={leftGroupActive}
+      middleGroupActive={middleGroupActive}
+      onLeftGroupClick={this.onLeftGroupClick}
+      onMiddleGroupClick={this.onMiddleGroupClick} />;
   }
   render() {
-    const { actionType, actionValue } = this.state;
-    const { showAdjustCashModal, allocationData } = this.props;
-    const data = {
-      actionType,
-      actionValue
-    };
+    const { showAdjustCashModal } = this.props;
+    const { middleGroupActive } = this.state;
     return (
       <div className="allocationTableContainer" id="allocationTableContainer">
-        <Modal
-          mainClass="adjustCashModal"
-          titleText="Adjust Cash"
-          showModal={showAdjustCashModal}
-          onModalHide={this.onModalHide}
-          onSubmitClick={this.onSubmitClick}>
-          <AdjustCashForm
-            {...data}
-            onCheckChange={this.onCheckChange}
-            onValueChange={this.onValueChange}
-            onClearClick={this.onClearClick} />
-        </Modal>
-        <div className="targetAllocationTableContainer">
-          <Table {...this.props} onAdjustCashClick={this.onAdjustCashClick} />
-        </div>
+        {showAdjustCashModal?<AdjustCashModal showAdjustCashModal={showAdjustCashModal} />:""}
+        <Panel
+          mainClass="allocationPanel securityTargetPanel panel-transparent"
+          titleText="Security Target"
+          subHeadingChildren={this.getSubHeader()}>
+          <div className="targetAllocationTableContainer">
+            <Table
+              fieldType={middleGroupActive}
+              onAdjustCashClick={this.onAdjustCashClick}
+              onDataChange={this.onDataChange}
+              {...this.props} />
+          </div>
+        </Panel>
       </div>
     );
   }

@@ -1,22 +1,31 @@
 import CurrencyFormatter from 'currency-formatter';
 
 export const getUpdatedAllocationData = (arr, data) => {
-  return arr.map((obj, index) => {
-    if(data.id === obj.id) {
-      obj.targetPer = data.targetPer
-    }
-    return obj;
-  })
-}
-
-export const getUpdatedAdjustCashData = (arr, data) => {
-  return arr.map((obj, index) => {
+  return arr.filter((obj, index) => {
     if(data.id === obj.id) {
       obj.actionType = data.actionType;
       obj.actionValue = data.actionValue;
+      return true;
     }
-    return obj;
-  }).filter(obj => obj.id === data.id);
+  })
+}
+
+export const getUpdatedTargetData = (arr, data) => {
+  return arr.filter((obj, index) => {
+    if(data.id === obj.id) {
+      obj[data.field] = data.value;
+      return true;
+    }
+  })
+}
+
+export const getAdjustCashFormData = (arr, data) => {
+  return arr.filter(obj => data.id === obj.id)[0];
+}
+
+export const getUpdatedAdjustCashData = (obj, data) => {
+  obj[data.type] = data.value;
+  return obj;
 }
 
 export const getStyle = (prop, value) => {
@@ -43,6 +52,7 @@ export const getCalculatedTotal = (data, field) => {
 export default {
   getUpdatedAllocationData,
   getUpdatedAdjustCashData,
+  getUpdatedTargetData,
   getStyle,
   getStyles,
   getPriceFormat,

@@ -9,7 +9,9 @@ const {
 } = config.dev;
 
 const {
-  getUpdatedAdjustCashData
+  getUpdatedAdjustCashData,
+  getUpdatedAllocationData,
+  getUpdatedTargetData
 } = utils;
 
 const getAllocationDataSuccess = (data) => {
@@ -19,7 +21,7 @@ const getAllocationDataSuccess = (data) => {
   }
 }
 
-const getAllocationData = () => {
+export const getAllocationData = () => {
   return (dispatch) => {
     return Axios.get(allocationDataUrl)
       .then(response => {
@@ -38,7 +40,7 @@ const getAssetDataSuccess = (data) => {
   }
 }
 
-const getAssetData = () => {
+export const getAssetData = () => {
   return (dispatch) => {
     return Axios.get(assetDataUrl)
       .then(response => {
@@ -48,26 +50,12 @@ const getAssetData = () => {
         throw(error);
       });
   };
-};
-
-const updateAllocationData = (data) => {
-  return {
-    type: ActionTypes.UPDATE_ALLOCATION_DATA,
-    data
-  }
 }
 
-const updateAdjustCashDataSuccess = (data) => {
-  return {
-    type: ActionTypes.UPDATE_ADJUST_CASH_DATA_SUCCESS,
-    data
-  }
-}
-
-const updateAdjustCashData = (allocationData, data) => {
-  const updatedAdjustCashData = getUpdatedAdjustCashData(allocationData, data);
+export const updateAllocationData = (allocationData, data) => {
+  const updatedAllocationData = getUpdatedAllocationData(allocationData, data);
   return (dispatch) => {
-    return Axios.put(allocationDataUrl+"/"+data.id, updatedAdjustCashData)
+    return Axios.put(allocationDataUrl+"/"+data.id, updatedAllocationData[0])
       .then(response => {
         dispatch(getAllocationData())
       })
@@ -77,10 +65,30 @@ const updateAdjustCashData = (allocationData, data) => {
   };
 }
 
-const handleAdjustCashModalSuccess = (type) => {
+export const updateAllocationTargetData = (allocationData, data) => {
+  const updatedTargetData = getUpdatedTargetData(allocationData, data);
+  return (dispatch) => {
+    return Axios.put(allocationDataUrl+"/"+data.id, updatedTargetData[0])
+      .then(response => {
+        dispatch(getAllocationData())
+      })
+      .catch(error => {
+        throw(error);
+      });
+  };
+}
+
+export const clearAdjustCashData = () => {
+  return {
+    type: ActionTypes.CLEAR_ADJUST_CASH_DATA
+  }
+}
+
+const handleAdjustCashModalSuccess = ({type, data}) => {
   if(type === "open") {
     return {
-      type: ActionTypes.SHOW_ADJUST_CASH_MODAL
+      type: ActionTypes.SHOW_ADJUST_CASH_MODAL,
+      data
     }
   } else {
     return {
@@ -89,20 +97,17 @@ const handleAdjustCashModalSuccess = (type) => {
   }
 }
 
-const handleAdjustCashModal = (type) => {
+export const handleAdjustCashModal = (data) => {
   return (dispatch) => {
-    dispatch(handleAdjustCashModalSuccess(type))
+    dispatch(handleAdjustCashModalSuccess(data))
   }
 }
 
 export default {
   getAllocationData,
-  getAllocationDataSuccess,
   getAssetData,
-  getAssetDataSuccess,
   updateAllocationData,
-  updateAdjustCashDataSuccess,
-  updateAdjustCashData,
-  handleAdjustCashModalSuccess,
+  updateAllocationTargetData,
+  clearAdjustCashData,
   handleAdjustCashModal
 };

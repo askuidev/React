@@ -1,23 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import * as actions from "../actions";
 import ButtonGroup from './common/ButtonGroup';
 import MdRefresh from 'react-icons/lib/md/refresh';
 
 class AdjustCashForm extends React.Component {
-  onCheckChange = (value, e) => {
-    const { onCheckChange } = this.props;
-    if(onCheckChange) onCheckChange({actionType: value}, e);
-  }
-  onValueChange = (e) => {
-    const { onValueChange } = this.props;
-    if(onValueChange) onValueChange({actionValue: e.target.value}, e);
-  }
-  onClearClick = () => {
-    const { onClearClick } = this.props;
-    if(onClearClick) onClearClick();
-  }
   render() {
     const {
       mainClass = ""
@@ -28,7 +13,7 @@ class AdjustCashForm extends React.Component {
           <div className="form-group">
             <label className="control-label font-weight-normal">Please select your action below:</label>
             <ButtonGroup
-              onRadioChange={this.onCheckChange}
+              onRadioChange={this.props.onCheckChange}
               checkedRadio={this.props.actionType}
               buttonType="radio"
               buttons={[
@@ -41,12 +26,12 @@ class AdjustCashForm extends React.Component {
               <input
                 className="form-control"
                 placeholder="Enter value"
-                onChange={this.onValueChange}
+                onChange={this.props.onValueChange}
                 value={this.props.actionValue || ""} />
               <span className="input-group-btn">
                 <button type="button"
                   className="btn btn-default btn-transparent"
-                  onClick={this.onClearClick}>
+                  onClick={this.props.onClearClick}>
                   <MdRefresh className="clearIcon" />
                   <span className="clearText">Clear</span>
                 </button>
@@ -59,12 +44,4 @@ class AdjustCashForm extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {...state}
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {...bindActionCreators({...actions}, dispatch)}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AdjustCashForm);
+export default AdjustCashForm;
