@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router
-} from 'react-router-dom'
+} from 'react-router-dom';
 import AllocationTableContainer from './components/AllocationTableContainer';
 
 class App extends Component {
