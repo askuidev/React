@@ -6,38 +6,11 @@ import {
     getPriceFormat,
     getCalculatedTotal
 } from '../../../utils';
-
-interface TableRowDataProps {
-    description: string;
-    adjustCash: boolean;
-    actionType: string;
-    actionValue: string;
-    currentPer: string;
-    symbol: string;
-    targetPer: string;
-    value: string;
-    id: string | number;
-    targetPrice: string;
-    buySellPrice: string;
-    driftPer: string;
-}
-
-interface TableFooterProps {
-    allocationData?: TableRowDataProps[];
-    searchText?: string;
-}
-
-interface TableFooterState {
-    searchText: string;
-}
-
-interface MyEventTarget extends EventTarget {
-  value: string;
-}
-
-interface MyFormEvent extends React.FormEvent<HTMLInputElement> {
-  target: MyEventTarget;
-}
+import {
+  TableFooterProps,
+  TableFooterState,
+  MyFormEvent
+} from '../../../types';
 
 class TableFooter extends React.Component<TableFooterProps, TableFooterState> {
     constructor(props: TableFooterProps) {
@@ -79,7 +52,8 @@ class TableFooter extends React.Component<TableFooterProps, TableFooterState> {
               buttons={[
                   { text: 'Cancel', className: 'btn-transparent color-light-blue' },
                   { text: 'Continue Auto Rebalance', className: 'btn-light-blue active' }
-              ]} />
+              ]}
+          />
         );
     }
     onSearchChange = (e: MyFormEvent) => {
@@ -97,6 +71,7 @@ class TableFooter extends React.Component<TableFooterProps, TableFooterState> {
                     <td className="table-footer-cell-padding">{getPriceFormat(getCalculatedTotal(data, 'value'))}</td>
                     <td>{getCalculatedTotal(data, 'currentPer')}</td>
                     <td className="text-center">{getCalculatedTotal(data, 'targetPer')}</td>
+                    <td />
                     <td className="text-center">{getPriceFormat(getCalculatedTotal(data, 'targetPrice'))}</td>
                     <td />
                     <td />
@@ -105,6 +80,7 @@ class TableFooter extends React.Component<TableFooterProps, TableFooterState> {
                     <td colSpan={3}>
                         <div className="pull-left">{this.getSearchInput()}</div>
                     </td>
+                    <td />
                     <td />
                     <td />
                     <td />

@@ -1,12 +1,6 @@
 import * as React from 'react';
 import ButtonGroup from '../../common/ButtonGroup';
-
-interface TableControlsProps {
-    leftGroupActive?: string;
-    middleGroupActive?: string;
-    onLeftGroupClick?: (leftGroupActive: string) => void;
-    onMiddleGroupClick?: (middleGroupActive: string) => void;
-}
+import { TableControlsProps } from '../../../types';
 
 class TableControls extends React.Component<TableControlsProps, {}> {
     onLeftGroupClick = (leftGroupActive: string) => {

@@ -1,11 +1,5 @@
 import * as React from 'react';
-
-interface CheckboxProps {
-    id?: string | number;
-    label?: string;
-    mainClass?: string;
-    onChange?: (id: string | number, e: object) => void;
-}
+import { CheckboxProps } from '../../types';
 
 export default class Checkbox extends React.Component<CheckboxProps, {}> {
     onChange = (id: string | number, e: object) => {

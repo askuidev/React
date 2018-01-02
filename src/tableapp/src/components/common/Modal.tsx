@@ -1,14 +1,6 @@
 import * as React from 'react';
 const { Modal } = require('react-bootstrap');
-
-interface ModalProps {
-    children?: any;
-    mainClass?: string;
-    titleText?: string;
-    showModal?: boolean;
-    onModalHide?: () => void;
-    onSubmitClick?: () => void;
-}
+import { ModalProps } from '../../types';
 
 class ModalComponent extends React.Component<ModalProps, {}> {
     onModalHide = () => {

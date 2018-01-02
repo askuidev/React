@@ -2,47 +2,15 @@ import * as React from 'react';
 const { Link } = require('react-router-dom');
 import Checkbox from '../Checkbox';
 import { getStyle, getPriceFormat } from '../../../utils';
+import {
+  TableRowDataProps,
+  TableRowEntity,
+  TableRowState,
+  MyFormEvent
+} from '../../../types';
 
-interface TableRowDataProps {
-  description?: string;
-  adjustCash?: boolean;
-  actionType?: string;
-  actionValue?: string;
-  currentPer?: string;
-  symbol?: string;
-  targetPer?: string;
-  value?: string;
-  id?: string | number;
-  targetPrice?: string;
-  buySellPrice?: string;
-  driftPer?: string;
-}
-
-interface CallbackProps {
-  (params: object): void;
-}
-
-interface TableRowProps {
-  rowData?: TableRowDataProps;
-  fieldType?: string;
-  onAdjustCashClick?: (rowData: TableRowDataProps) => void;
-  onDataChange?: CallbackProps;
-}
-
-interface TableRowState {
-  targetPer?: string;
-}
-
-interface MyEventTarget extends EventTarget {
-  value: string;
-}
-
-interface MyFormEvent extends React.FormEvent<HTMLInputElement> {
-  target: MyEventTarget;
-}
-
-class TableRow extends React.Component<TableRowProps, TableRowState> {
-  constructor(props: TableRowProps) {
+class TableRow extends React.Component<TableRowEntity, TableRowState> {
+  constructor(props: TableRowEntity) {
     super(props);
     this.state = {
       targetPer: '0'
@@ -154,7 +122,9 @@ class TableRow extends React.Component<TableRowProps, TableRowState> {
           {fieldType === 'percent'
             ? this.getTargetPerInput(rowData)
             : rowData.targetPer}
-          {fieldType === 'percent' ? this.getTargetCheckbox(rowData) : ''}
+        </td>
+        <td>
+          {this.getTargetCheckbox(rowData)}
         </td>
         <td className="text-center">
           {fieldType === 'dollar'

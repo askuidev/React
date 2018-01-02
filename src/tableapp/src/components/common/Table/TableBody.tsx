@@ -1,33 +1,6 @@
 import * as React from 'react';
 import TableRow from './TableRow';
-
-interface TableRowDataProps {
-    description: string;
-    adjustCash: boolean;
-    actionType: string;
-    actionValue: string;
-    currentPer: string;
-    symbol: string;
-    targetPer: string;
-    value: string;
-    id: string | number;
-    targetPrice: string;
-    buySellPrice: string;
-    driftPer: string;
-}
-
-interface TableCellProps {
-    value?: string;
-    id?: string | number;
-    field?: string;
-}
-
-interface TableBodyProps {
-    allocationData?: TableRowDataProps[];
-    fieldType?: string;
-    onAdjustCashClick?: (allocationData: TableRowDataProps) => void;
-    onDataChange?: (params: TableCellProps) => void;
-}
+import { TableRowDataProps, TableBodyProps } from '../../../types';
 
 class TableBody extends React.Component<TableBodyProps, {}> {
     renderRows() {

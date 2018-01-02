@@ -7,55 +7,12 @@ import {
 } from '../actions';
 import Modal from './common/Modal';
 import AdjustCashForm from './AdjustCashForm';
-
-interface TableRowDataProps {
-    description: string;
-    adjustCash: boolean;
-    actionType: string;
-    actionValue: string;
-    currentPer: string;
-    symbol: string;
-    targetPer: string;
-    value: string;
-    id: string | number;
-    targetPrice: string;
-    buySellPrice: string;
-    driftPer: string;
-}
-
-interface AdjustCashDataProps {
-    id: string | number;
-    actionType: string;
-    actionValue: string;
-}
-
-interface HandleAdjustCashModalProps {
-    type: string;
-    data: string;
-}
-
-interface AdjustCashModalProps {
-    allocationData: TableRowDataProps[];
-    adjustCashData: AdjustCashDataProps;
-    allocationId: string | number;
-    mainClass: string;
-    showAdjustCashModal: boolean;
-    handleAdjustCashModal: (props: HandleAdjustCashModalProps) => void;
-    updateAllocationData: (allocationData: TableRowDataProps[], props: AdjustCashDataProps) => void;
-}
-
-interface AdjustCashModalState {
-    actionType: string;
-    actionValue: string;
-}
-
-interface MyEventTarget extends EventTarget {
-  value: string;
-}
-
-interface MyFormEvent extends React.FormEvent<HTMLInputElement> {
-  target: MyEventTarget;
-}
+import {
+  AdjustCashDataProps,
+  AdjustCashModalProps,
+  AdjustCashModalState,
+  MyFormEvent
+} from '../types';
 
 class AdjustCashModal extends React.Component<AdjustCashModalProps, AdjustCashModalState> {
     constructor(props: AdjustCashModalProps) {
@@ -123,12 +80,16 @@ const mapStateToProps = (state: AdjustCashDataProps) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<AdjustCashDataProps>) => {
-    return {
-      ...bindActionCreators({
-          handleAdjustCashModal,
-          updateAllocationData
-      }, dispatch), dispatch
-    };
+  return {
+    ...bindActionCreators(
+      {
+        handleAdjustCashModal,
+        updateAllocationData
+      },
+      dispatch
+    ),
+    dispatch
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdjustCashModal);

@@ -1,9 +1,5 @@
 import * as React from 'react';
-
-interface NoDataRowProps {
-    colSpan: number;
-    message: string;
-}
+import { NoDataRowProps } from '../../../types';
 
 const NoDataRow = (props: NoDataRowProps) => {
     return (

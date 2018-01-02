@@ -1,37 +1,7 @@
 import * as React from 'react';
 import ButtonGroup from './common/ButtonGroup';
 const MdRefresh = require('react-icons/lib/md/refresh');
-
-interface AdjustCashFormProps {
-    buttonType?: string;
-    actionType?: string;
-    actionValue?: string;
-    withIcons?: boolean;
-    isGroup?: boolean;
-    activeBtn?: string;
-    mainClass?: string;
-    grouped?: boolean;
-    buttons?: ButtonProps[];
-    checkedRadio?: string;
-    onCheckChange: (actionType: string, e: MyFormEvent) => void;
-    onValueChange: (e: MyFormEvent) => void;
-    onClearClick: () => void;
-}
-
-interface ButtonProps {
-    text?: string;
-    field?: string;
-    iconClass?: string;
-    className?: string;
-}
-
-interface MyEventTarget extends EventTarget {
-  value: string;
-}
-
-interface MyFormEvent extends React.FormEvent<HTMLInputElement> {
-  target: MyEventTarget;
-}
+import { AdjustCashFormProps } from '../types';
 
 class AdjustCashForm extends React.Component<AdjustCashFormProps, {}> {
     render() {

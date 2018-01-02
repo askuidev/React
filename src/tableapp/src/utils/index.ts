@@ -74,7 +74,7 @@ export const getPriceFormat = (price: {}, code = 'USD') => {
 export const getCalculatedTotal = (data: AllocationDataProps[], field: string) => {
     const total = data.reduceRight((prevValue, obj) => {
         return prevValue + +obj[field];
-    },0);
+    }, 0);
     return total.toFixed(2);
 };
 

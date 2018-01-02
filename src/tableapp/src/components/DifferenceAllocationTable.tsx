@@ -4,14 +4,12 @@ const { connect } = require('react-redux');
 import { getAssetData } from '../actions';
 import { getStyle } from '../utils';
 import NoDataRow from './common/Table/NoDataRow';
+import {
+  DiffAllocationTableRowProps,
+  DiffAllocationTableProps
+} from '../types';
 
-interface TableRowDataProps {
-    color?: string;
-    assetClass?: string;
-    difference?: string;
-}
-
-class TableRow extends React.Component<TableRowDataProps, {}> {
+class TableRow extends React.Component<DiffAllocationTableRowProps, {}> {
     getStyle(prop: string, value: string) {
         return getStyle({ prop, value });
     }
@@ -28,17 +26,6 @@ class TableRow extends React.Component<TableRowDataProps, {}> {
           </tr>
         );
     }
-}
-
-interface AssetDataProps {
-    color: string;
-    assetClass: string;
-    difference: string;
-}
-
-interface DiffAllocationTableProps {
-    assetData?: AssetDataProps[];
-    getAssetData: () => {};
 }
 
 class DifferenceAllocationTable extends React.Component<DiffAllocationTableProps, {}> {
@@ -82,11 +69,15 @@ const mapStateToProps = (state: DiffAllocationTableProps) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<DiffAllocationTableProps>) => {
-    return {
-        ...bindActionCreators({
-            getAssetData
-        }, dispatch), dispatch
-    };
+  return {
+    ...bindActionCreators(
+      {
+        getAssetData
+      },
+      dispatch
+    ),
+    dispatch
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DifferenceAllocationTable);

@@ -11,49 +11,11 @@ import TableControls from './common/Table/TableControls';
 import Panel from './common/Panel';
 import AdjustCashModal from './AdjustCashModal';
 import { Icon } from 'react-fa';
-
-interface TableRowDataProps {
-  description: string;
-  adjustCash: boolean;
-  actionType: string;
-  actionValue: string;
-  currentPer: string;
-  symbol: string;
-  targetPer: string;
-  value: string;
-  id: string | number;
-  targetPrice: string;
-  buySellPrice: string;
-  driftPer: string;
-}
-
-interface TargetAllocationProps {
-  getAllocationData: () => void;
-  handleAdjustCashModal: (props: AdjustCashModal) => void;
-  updateAllocationTargetData: (
-    allocationData: TableRowDataProps[],
-    props: ChangeAllocationData
-  ) => void;
-  allocationData: TableRowDataProps[];
-  allocationId: string;
-  showAdjustCashModal: boolean;
-}
-
-interface TargetAllocationState {
-  leftGroupActive?: string;
-  middleGroupActive?: string;
-}
-
-interface AdjustCashModal {
-  type: string;
-  data: any;
-}
-
-interface ChangeAllocationData {
-  value: string;
-  id: string;
-  field: string;
-}
+import {
+  TargetAllocationProps,
+  TargetAllocationState,
+  ChangeAllocationData
+} from '../types';
 
 class TargetAllocationTable extends React.Component<
   TargetAllocationProps,
@@ -110,7 +72,7 @@ class TargetAllocationTable extends React.Component<
         )}
         <Panel
           mainClass="allocationPanel securityTargetPanel panel-transparent"
-          titleText="Security Target"
+          titleText="Set Security Target"
           subHeadingChildren={this.getSubHeader()}
         >
           <div className="targetAllocationTableContainer">
@@ -123,7 +85,7 @@ class TargetAllocationTable extends React.Component<
           </div>
           <div className="targetAllocationTableControls">
             <span className="pull-right">
-              <button className="btn btn-transparent color-light-blue cancel-btn">
+              <button className="btn btn-transparent cancel-btn">
                 Cancel <Icon name="angle-right angle-icon" />
               </button>
               <button className="btn btn-transparent color-light-blue remove-security-btn">

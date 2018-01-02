@@ -179,6 +179,12 @@ html, body {
   color: #000;
   font-weight: bold;
 }
+.allocationTableContainer .targetAllocationTableControls .cancel-btn:hover,
+.allocationTableContainer .targetAllocationTableControls .cancel-btn:focus {
+  border-color: transparent;
+  background: none;
+  font-weight: bold;
+}
 .allocationTableContainer .targetAllocationTableControls .cancel-btn .angle-icon {
   font-size: 22px;
   font-weight: bold;

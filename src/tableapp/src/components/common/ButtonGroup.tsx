@@ -1,42 +1,11 @@
 import * as React from 'react';
 const { Icon } = require('react-fa');
-
-interface ButtonGroupProps {
-    buttonType?: string;
-    withIcons?: boolean;
-    isGroup?: boolean;
-    activeBtn?: string;
-    mainClass?: string;
-    grouped?: boolean;
-    buttons?: ButtonProps[] | RadioBtnProps[];
-    checkedRadio?: string;
-    onButtonGroupClick?: (field: string) => void;
-    onRadioChange?: (text: string, e: MyFormEvent) => void;
-    onCheckChange?: (actionType: string, e: MyFormEvent) => void;
-    onValueChange?: (e: MyFormEvent) => void;
-    onClearClick?: () => void;
-}
-
-interface ButtonProps {
-    text?: string;
-    field?: string;
-    iconClass?: string;
-    className?: string;
-}
-
-interface RadioBtnProps {
-    name?: string;
-    type?: string;
-    text?: string;
-}
-
-interface MyEventTarget extends EventTarget {
-  value: string;
-}
-
-interface MyFormEvent extends React.FormEvent<HTMLInputElement> {
-  target: MyEventTarget;
-}
+import {
+  ButtonGroupProps,
+  ButtonProps,
+  RadioBtnProps,
+  MyFormEvent
+} from '../../types';
 
 class ButtonGroup extends React.Component<ButtonGroupProps, {}> {
     onButtonGroupClick = (field: string) => {
